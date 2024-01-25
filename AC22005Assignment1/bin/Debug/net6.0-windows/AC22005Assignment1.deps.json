@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "AC22005Assignment1/1.0.0": {
+        "runtime": {
+          "AC22005Assignment1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AC22005Assignment1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
