@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblDirectionIndicator = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            lblDirectionIndicator = new Label();
+            SuspendLayout();
             // 
             // lblDirectionIndicator
             // 
-            this.lblDirectionIndicator.AutoSize = true;
-            this.lblDirectionIndicator.Font = new System.Drawing.Font("Ravie", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDirectionIndicator.Location = new System.Drawing.Point(12, 682);
-            this.lblDirectionIndicator.Name = "lblDirectionIndicator";
-            this.lblDirectionIndicator.Size = new System.Drawing.Size(325, 39);
-            this.lblDirectionIndicator.TabIndex = 0;
-            this.lblDirectionIndicator.Text = "Direction: None";
+            lblDirectionIndicator.AutoSize = true;
+            lblDirectionIndicator.Font = new Font("Ravie", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDirectionIndicator.Location = new Point(270, 745);
+            lblDirectionIndicator.Name = "lblDirectionIndicator";
+            lblDirectionIndicator.Size = new Size(325, 39);
+            lblDirectionIndicator.TabIndex = 0;
+            lblDirectionIndicator.Text = "Direction: None";
             // 
             // GameForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(893, 848);
-            this.Controls.Add(this.lblDirectionIndicator);
-            this.Name = "GameForm";
-            this.Text = "Game";
-            this.Load += new System.EventHandler(this.GameForm_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.YellowGreen;
+            ClientSize = new Size(893, 848);
+            Controls.Add(lblDirectionIndicator);
+            Name = "GameForm";
+            Text = "Game";
+            Load += GameForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

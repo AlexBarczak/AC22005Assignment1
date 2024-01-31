@@ -78,6 +78,10 @@ namespace AC22005Assignment1
 
 
             InitializeComponent();
+
+            int xOffset = (this.ClientSize.Width - cellSize * levelBitmap.Width) / 2;
+            int yOffset = (this.ClientSize.Height - cellSize * levelBitmap.Height) / 2;
+
             for (int x = 0; x < levelBitmap.Width; x++)
             {
                 for(int y = 0; y < levelBitmap.Height; y++)
@@ -85,7 +89,9 @@ namespace AC22005Assignment1
                     grid[x, y] = new Button();
                     grid[x, y].FlatStyle = FlatStyle.Flat;
                     grid[x, y].FlatAppearance.BorderSize = 0;
-                    grid[x, y].SetBounds(cellSize * x, cellSize * y, cellSize , cellSize);
+                    //grid[x, y].SetBounds(cellSize * x, cellSize * y, cellSize , cellSize);
+                    grid[x, y].SetBounds(xOffset + cellSize * x, yOffset + cellSize * y, cellSize, cellSize);
+
                     if (levelMapData[x, y] == EMPTY_TILE) grid[x, y].BackColor = Color.White;
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
                     else grid[x, y].BackColor = Color.Blue;
@@ -94,6 +100,19 @@ namespace AC22005Assignment1
                     Controls.Add(grid[x, y]);
                 }
             }
+            Button exitButton = new Button();
+            exitButton.Text = "Exit";
+            exitButton.Size = new Size(80, 30);
+            exitButton.Location = new Point(10, (this.ClientSize.Height - exitButton.Height) / 2);
+            exitButton.Click += new EventHandler(this.ExitButtonClicked);
+            Controls.Add(exitButton);
+
+            Button helpButton = new Button();
+            helpButton.Text = "How to play";
+            helpButton.Size = new Size(80, 30);
+            helpButton.Location = new Point(10, ((this.ClientSize.Height - helpButton.Height) / 2) - 40);
+            helpButton.Click += new EventHandler(this.HelpButtonClicked);
+            Controls.Add(helpButton);
         }
 
         private void GridButtonClicked(object sender, EventArgs e)
@@ -129,6 +148,16 @@ namespace AC22005Assignment1
                 }
             }
             
+        }
+
+        private void ExitButtonClicked(object sender, EventArgs e)
+        {
+            this.Close(); // Close the current form
+        }
+
+        private void HelpButtonClicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void GameForm_Load(object sender, EventArgs e)
