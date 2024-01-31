@@ -78,7 +78,9 @@ namespace AC22005Assignment1
             {
                 for(int y = 0; y < levelBitmap.Height; y++)
                 {
-                    grid[x,y] = new Button();
+                    grid[x, y] = new Button();
+                    grid[x, y].FlatStyle = FlatStyle.Flat;
+                    grid[x, y].FlatAppearance.BorderSize = 0;
                     grid[x, y].SetBounds(cellSize * x, cellSize * y, cellSize , cellSize);
                     if (levelMapData[x, y] == EMPTY_TILE) grid[x, y].BackColor = Color.White;
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
@@ -96,6 +98,11 @@ namespace AC22005Assignment1
         }
 
         private void GameForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
