@@ -61,6 +61,7 @@ namespace AC22005Assignment1
 
         public GameForm()
         {
+            this.AutoSize = true;
             Debug.WriteLine("loading");
             // initialise level data variable
             levelBitmap = new Bitmap(@"../../../level.bmp");
@@ -164,11 +165,6 @@ namespace AC22005Assignment1
         }
 
         private void GameForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
         {
 
         }
