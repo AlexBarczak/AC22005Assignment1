@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             lblDirectionIndicator = new Label();
+            menuStrip1 = new MenuStrip();
+            optionsToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            howToPlayToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // lblDirectionIndicator
@@ -41,6 +47,43 @@
             lblDirectionIndicator.TabIndex = 0;
             lblDirectionIndicator.Text = "Direction: None";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(893, 24);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem, howToPlayToolStripMenuItem, exitToolStripMenuItem });
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            optionsToolStripMenuItem.Size = new Size(61, 20);
+            optionsToolStripMenuItem.Text = "Options";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            // 
+            // howToPlayToolStripMenuItem
+            // 
+            howToPlayToolStripMenuItem.Name = "howToPlayToolStripMenuItem";
+            howToPlayToolStripMenuItem.Size = new Size(180, 22);
+            howToPlayToolStripMenuItem.Text = "How to Play";
+            howToPlayToolStripMenuItem.Click += howToPlayToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -48,9 +91,13 @@
             BackColor = Color.YellowGreen;
             ClientSize = new Size(893, 848);
             Controls.Add(lblDirectionIndicator);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "GameForm";
             Text = "Game";
             Load += GameForm_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -58,5 +105,10 @@
         #endregion
 
         private Label lblDirectionIndicator;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem howToPlayToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
     }
 }

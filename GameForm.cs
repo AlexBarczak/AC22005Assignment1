@@ -70,9 +70,9 @@ namespace AC22005Assignment1
             // translate bitmap into the 2D array for level data, though it might not even be necessary
             for (int i = 0; i < levelBitmap.Width; i++)
             {
-                for(int j = 0; j < levelBitmap.Height; j++)
+                for (int j = 0; j < levelBitmap.Height; j++)
                 {
-                    levelMapData[i,j] = levelBitmap.GetPixel(i, j).R;
+                    levelMapData[i, j] = levelBitmap.GetPixel(i, j).R;
                 }
             }
 
@@ -84,7 +84,7 @@ namespace AC22005Assignment1
 
             for (int x = 0; x < levelBitmap.Width; x++)
             {
-                for(int y = 0; y < levelBitmap.Height; y++)
+                for (int y = 0; y < levelBitmap.Height; y++)
                 {
                     grid[x, y] = new Button();
                     grid[x, y].FlatStyle = FlatStyle.Flat;
@@ -128,16 +128,19 @@ namespace AC22005Assignment1
             Debug.WriteLine("x: " + diffX.ToString() + " y: " + diffY.ToString());
 
             // right, left or up, down
-            if (Math.Abs(diffX) > Math.Abs(diffY)) {
+            if (Math.Abs(diffX) > Math.Abs(diffY))
+            {
                 if (diffX > 0)
                 {
                     lblDirectionIndicator.Text = "Direction: left";
-                } else
+                }
+                else
                 {
                     lblDirectionIndicator.Text = "Direction: Right";
                 }
-            } 
-            else {
+            }
+            else
+            {
                 if (diffY > 0)
                 {
                     lblDirectionIndicator.Text = "Direction: Up";
@@ -147,7 +150,7 @@ namespace AC22005Assignment1
                     lblDirectionIndicator.Text = "Direction: Down";
                 }
             }
-            
+
         }
 
         private void ExitButtonClicked(object sender, EventArgs e)
@@ -168,6 +171,22 @@ namespace AC22005Assignment1
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult aboutResult;
+            aboutResult = MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void howToPlayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
