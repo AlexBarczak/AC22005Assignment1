@@ -28,54 +28,57 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnStart = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            btnStart = new Button();
+            btnExit = new Button();
+            lblTitle = new Label();
+            SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(325, 216);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(148, 72);
-            this.btnStart.TabIndex = 0;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            btnStart.Location = new Point(284, 162);
+            btnStart.Margin = new Padding(3, 2, 3, 2);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(130, 54);
+            btnStart.TabIndex = 0;
+            btnStart.Text = "Start";
+            btnStart.UseVisualStyleBackColor = true;
+            btnStart.Click += btnStart_Click;
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(325, 312);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(148, 72);
-            this.btnExit.TabIndex = 1;
-            this.btnExit.Text = "Exit";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            btnExit.Location = new Point(284, 234);
+            btnExit.Margin = new Padding(3, 2, 3, 2);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(130, 54);
+            btnExit.TabIndex = 1;
+            btnExit.Text = "Exit";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.Location = new System.Drawing.Point(177, 53);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(463, 81);
-            this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "placeholder title";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Stencil", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTitle.Location = new Point(200, 45);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(289, 57);
+            lblTitle.TabIndex = 2;
+            lblTitle.Text = "Snake-Man";
             // 
             // MenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnStart);
-            this.Name = "MenuForm";
-            this.Text = "Menu";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.YellowGreen;
+            ClientSize = new Size(700, 338);
+            Controls.Add(lblTitle);
+            Controls.Add(btnExit);
+            Controls.Add(btnStart);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "MenuForm";
+            Text = "Menu";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
