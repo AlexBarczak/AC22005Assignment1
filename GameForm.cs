@@ -118,13 +118,22 @@ namespace AC22005Assignment1
 
         private void GridButtonClicked(object sender, EventArgs e)
         {
+
+
             // figure out center of grid
-            int centerX = cellSize * levelBitmap.Width / 2;
-            int centerY = cellSize * levelBitmap.Height / 2;
+            //int centerX = (cellSize) * levelBitmap.Width / 2;
+            //int centerY = (cellSize) * levelBitmap.Height / 2;
 
             // figure out difference between center and tile pressed
-            int diffX = centerX - ((Button)sender).Location.X;
-            int diffY = centerY - ((Button)sender).Location.Y;
+            //int diffX = centerX - ((Button)sender).Location.X;
+            //int diffY = centerY - ((Button)sender).Location.Y;
+
+            int centerX = this.ClientSize.Width / 2;
+            int centerY = this.ClientSize.Height / 2;
+
+            // Figure out difference between center and tile pressed
+            int diffX = centerX - ((Button)sender).Location.X - cellSize / 2;
+            int diffY = centerY - ((Button)sender).Location.Y - cellSize / 2;
 
             Debug.WriteLine("x: " + diffX.ToString() + " y: " + diffY.ToString());
 
