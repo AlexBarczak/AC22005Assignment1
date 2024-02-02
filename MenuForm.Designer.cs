@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuForm));
             btnStart = new Button();
             btnExit = new Button();
             lblTitle = new Label();
@@ -35,7 +36,8 @@
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(284, 162);
+            btnStart.Anchor = AnchorStyles.None;
+            btnStart.Location = new Point(505, 329);
             btnStart.Margin = new Padding(3, 2, 3, 2);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(130, 54);
@@ -46,7 +48,8 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(284, 234);
+            btnExit.Anchor = AnchorStyles.None;
+            btnExit.Location = new Point(505, 401);
             btnExit.Margin = new Padding(3, 2, 3, 2);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(130, 54);
@@ -57,9 +60,10 @@
             // 
             // lblTitle
             // 
+            lblTitle.Anchor = AnchorStyles.None;
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Stencil", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(200, 45);
+            lblTitle.Location = new Point(429, 237);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(289, 57);
             lblTitle.TabIndex = 2;
@@ -70,13 +74,16 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.YellowGreen;
-            ClientSize = new Size(700, 338);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1143, 673);
             Controls.Add(lblTitle);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
             Margin = new Padding(3, 2, 3, 2);
             Name = "MenuForm";
             Text = "Menu";
+            WindowState = FormWindowState.Maximized;
             ResumeLayout(false);
             PerformLayout();
         }

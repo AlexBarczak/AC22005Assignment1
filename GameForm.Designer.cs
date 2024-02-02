@@ -39,6 +39,7 @@
             // 
             // lblDirectionIndicator
             // 
+            lblDirectionIndicator.Anchor = AnchorStyles.None;
             lblDirectionIndicator.AutoSize = true;
             lblDirectionIndicator.Font = new Font("Ravie", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDirectionIndicator.Location = new Point(270, 745);
@@ -66,21 +67,21 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(138, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // howToPlayToolStripMenuItem
             // 
             howToPlayToolStripMenuItem.Name = "howToPlayToolStripMenuItem";
-            howToPlayToolStripMenuItem.Size = new Size(180, 22);
+            howToPlayToolStripMenuItem.Size = new Size(138, 22);
             howToPlayToolStripMenuItem.Text = "How to Play";
             howToPlayToolStripMenuItem.Click += howToPlayToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(138, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -95,6 +96,7 @@
             MainMenuStrip = menuStrip1;
             Name = "GameForm";
             Text = "Game";
+            WindowState = FormWindowState.Maximized;
             Load += GameForm_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
