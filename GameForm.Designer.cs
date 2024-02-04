@@ -28,80 +28,104 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblDirectionIndicator = new Label();
-            menuStrip1 = new MenuStrip();
-            optionsToolStripMenuItem = new ToolStripMenuItem();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
-            howToPlayToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1.SuspendLayout();
-            SuspendLayout();
+            this.lblDirectionIndicator = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trBar = new System.Windows.Forms.TrackBar();
+            this.lblVolume = new System.Windows.Forms.Label();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trBar)).BeginInit();
+            this.SuspendLayout();
             // 
             // lblDirectionIndicator
             // 
-            lblDirectionIndicator.Anchor = AnchorStyles.None;
-            lblDirectionIndicator.AutoSize = true;
-            lblDirectionIndicator.Font = new Font("Ravie", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDirectionIndicator.Location = new Point(270, 745);
-            lblDirectionIndicator.Name = "lblDirectionIndicator";
-            lblDirectionIndicator.Size = new Size(325, 39);
-            lblDirectionIndicator.TabIndex = 0;
-            lblDirectionIndicator.Text = "Direction: None";
+            this.lblDirectionIndicator.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblDirectionIndicator.AutoSize = true;
+            this.lblDirectionIndicator.Font = new System.Drawing.Font("Ravie", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirectionIndicator.Location = new System.Drawing.Point(270, 745);
+            this.lblDirectionIndicator.Name = "lblDirectionIndicator";
+            this.lblDirectionIndicator.Size = new System.Drawing.Size(325, 39);
+            this.lblDirectionIndicator.TabIndex = 0;
+            this.lblDirectionIndicator.Text = "Direction: None";
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(893, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(893, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
             // 
             // optionsToolStripMenuItem
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem, howToPlayToolStripMenuItem, exitToolStripMenuItem });
-            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new Size(61, 20);
-            optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.howToPlayToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
             // 
             // aboutToolStripMenuItem
             // 
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(138, 22);
-            aboutToolStripMenuItem.Text = "About";
-            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // howToPlayToolStripMenuItem
             // 
-            howToPlayToolStripMenuItem.Name = "howToPlayToolStripMenuItem";
-            howToPlayToolStripMenuItem.Size = new Size(138, 22);
-            howToPlayToolStripMenuItem.Text = "How to Play";
-            howToPlayToolStripMenuItem.Click += howToPlayToolStripMenuItem_Click;
+            this.howToPlayToolStripMenuItem.Name = "howToPlayToolStripMenuItem";
+            this.howToPlayToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.howToPlayToolStripMenuItem.Text = "How to Play";
             // 
             // exitToolStripMenuItem
             // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(138, 22);
-            exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // trBar
+            // 
+            this.trBar.Location = new System.Drawing.Point(12, 53);
+            this.trBar.Name = "trBar";
+            this.trBar.Size = new System.Drawing.Size(104, 45);
+            this.trBar.TabIndex = 2;
+            this.trBar.Scroll += new System.EventHandler(this.trBar_Scroll);
+            // 
+            // lblVolume
+            // 
+            this.lblVolume.AutoSize = true;
+            this.lblVolume.Location = new System.Drawing.Point(40, 35);
+            this.lblVolume.Name = "lblVolume";
+            this.lblVolume.Size = new System.Drawing.Size(38, 15);
+            this.lblVolume.TabIndex = 3;
+            this.lblVolume.Text = "label1";
             // 
             // GameForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.YellowGreen;
-            ClientSize = new Size(893, 848);
-            Controls.Add(lblDirectionIndicator);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
-            Name = "GameForm";
-            Text = "Game";
-            WindowState = FormWindowState.Maximized;
-            Load += GameForm_Load;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.YellowGreen;
+            this.ClientSize = new System.Drawing.Size(893, 848);
+            this.Controls.Add(this.lblVolume);
+            this.Controls.Add(this.trBar);
+            this.Controls.Add(this.lblDirectionIndicator);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "GameForm";
+            this.Text = "Game";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trBar)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -112,5 +136,7 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem howToPlayToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private TrackBar trBar;
+        private Label lblVolume;
     }
 }
