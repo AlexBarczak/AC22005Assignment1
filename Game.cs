@@ -16,7 +16,7 @@ namespace AC22005Assignment1
             public int posX;
             public int posY;
         }
-        private struct eneny
+        private struct enemy
         {
 
         }
