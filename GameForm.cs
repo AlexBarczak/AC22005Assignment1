@@ -250,14 +250,14 @@ namespace AC22005Assignment1
             if (Program.musicPlaying)
             {
                 Program.player.Stop();
-                BtnMute.BackgroundImage = Image.FromFile("unmute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../unmute.bmp");
                 Program.musicPlaying = false;
             }
             else
             {
                 Program.musicPlaying = true;
                 Program.player.PlayLooping();
-                BtnMute.BackgroundImage = Image.FromFile("mute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
             }
         }
     }

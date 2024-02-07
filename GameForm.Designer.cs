@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.lblDirectionIndicator = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnMute = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +59,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(893, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-          
             // 
             // optionsToolStripMenuItem
             // 
@@ -89,16 +90,16 @@
             // 
             // BtnMute
             // 
-            BtnMute.Anchor = AnchorStyles.None;
-            BtnMute.BackColor = Color.Linen;
-            BtnMute.BackgroundImage = (Image)resources.GetObject("BtnMute.BackgroundImage");
-            BtnMute.BackgroundImageLayout = ImageLayout.Zoom;
-            BtnMute.Location = new Point(1057, 28);
-            BtnMute.Name = "BtnMute";
-            BtnMute.Size = new Size(58, 62);
-            BtnMute.TabIndex = 4;
-            BtnMute.UseVisualStyleBackColor = false;
-            BtnMute.Click += BtnMute_Click;
+            this.BtnMute.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnMute.BackColor = System.Drawing.Color.Linen;
+            this.BtnMute.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnMute.BackgroundImage")));
+            this.BtnMute.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnMute.Location = new System.Drawing.Point(1057, 28);
+            this.BtnMute.Name = "BtnMute";
+            this.BtnMute.Size = new System.Drawing.Size(58, 62);
+            this.BtnMute.TabIndex = 4;
+            this.BtnMute.UseVisualStyleBackColor = false;
+            this.BtnMute.Click += new System.EventHandler(this.BtnMute_Click);
             // 
             // GameForm
             // 
@@ -106,6 +107,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.YellowGreen;
             this.ClientSize = new System.Drawing.Size(893, 848);
+            this.Controls.Add(this.BtnMute);
             this.Controls.Add(this.lblDirectionIndicator);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
