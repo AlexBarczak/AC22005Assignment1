@@ -158,7 +158,7 @@ namespace AC22005Assignment1
             return levelMapData;
         }
 
-        private void GridButtonClicked(object sender, EventArgs e)
+        private void GridButtonClicked(object? sender, EventArgs e)
         {
 
 
@@ -167,33 +167,36 @@ namespace AC22005Assignment1
             int centerY = this.ClientSize.Height / 2;
 
             // figure out difference between center and tile pressed
-            int diffX = centerX - ((Button)sender).Location.X - cellSize / 2;
-            int diffY = centerY - ((Button)sender).Location.Y - cellSize / 2;
+            if ((Button)sender != null)
+            {
+                int diffX = centerX - ((Button)sender).Location.X - cellSize / 2;
+                int diffY = centerY - ((Button)sender).Location.Y - cellSize / 2;
 
             Debug.WriteLine("x: " + diffX.ToString() + " y: " + diffY.ToString());
             Debug.WriteLine(((Button)sender).Name);
 
-            // right, left or up, down
-            if (Math.Abs(diffX) > Math.Abs(diffY))
-            {
-                if (diffX > 0)
+                // right, left or up, down
+                if (Math.Abs(diffX) > Math.Abs(diffY))
                 {
-                    lblDirectionIndicator.Text = "Direction: left";
+                    if (diffX > 0)
+                    {
+                        lblDirectionIndicator.Text = "Direction: left";
+                    }
+                    else
+                    {
+                        lblDirectionIndicator.Text = "Direction: Right";
+                    }
                 }
                 else
                 {
-                    lblDirectionIndicator.Text = "Direction: Right";
-                }
-            }
-            else
-            {
-                if (diffY > 0)
-                {
-                    lblDirectionIndicator.Text = "Direction: Up";
-                }
-                else
-                {
-                    lblDirectionIndicator.Text = "Direction: Down";
+                    if (diffY > 0)
+                    {
+                        lblDirectionIndicator.Text = "Direction: Up";
+                    }
+                    else
+                    {
+                        lblDirectionIndicator.Text = "Direction: Down";
+                    }
                 }
             }
 
@@ -211,12 +214,12 @@ namespace AC22005Assignment1
             }
         }
 
-        private void ExitButtonClicked(object sender, EventArgs e)
+        private void ExitButtonClicked(object? sender, EventArgs e)
         {
             this.Close(); // Close the current form
         }
 
-        private void HelpButtonClicked(object sender, EventArgs e)
+        private new void HelpButtonClicked(object? sender, EventArgs e)
         {
             MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -241,10 +244,21 @@ namespace AC22005Assignment1
         {
             MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-        private void setVolume(int sliderVal)
+        //Mute Button
+        private void BtnMute_Click(object sender, EventArgs e)
         {
-            //MenuForm.player.
+            if (Program.musicPlaying)
+            {
+                Program.player.Stop();
+                BtnMute.BackgroundImage = Image.FromFile("unmute.bmp");
+                Program.musicPlaying = false;
+            }
+            else
+            {
+                Program.musicPlaying = true;
+                Program.player.PlayLooping();
+                BtnMute.BackgroundImage = Image.FromFile("mute.bmp");
+            }
         }
     }
 }

@@ -57,6 +57,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(893, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+          
             // 
             // optionsToolStripMenuItem
             // 
@@ -86,6 +87,19 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // BtnMute
+            // 
+            BtnMute.Anchor = AnchorStyles.None;
+            BtnMute.BackColor = Color.Linen;
+            BtnMute.BackgroundImage = (Image)resources.GetObject("BtnMute.BackgroundImage");
+            BtnMute.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnMute.Location = new Point(1057, 28);
+            BtnMute.Name = "BtnMute";
+            BtnMute.Size = new Size(58, 62);
+            BtnMute.TabIndex = 4;
+            BtnMute.UseVisualStyleBackColor = false;
+            BtnMute.Click += BtnMute_Click;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -113,5 +127,6 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem howToPlayToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Button BtnMute;
     }
 }
