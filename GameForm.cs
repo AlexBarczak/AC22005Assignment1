@@ -27,8 +27,11 @@ namespace AC22005Assignment1
         public const int cellSize = 20;
 
         Button[,] grid;
-        Bitmap levelBitmap;
+        public Bitmap levelBitmap;
         int[,] levelMapData;
+
+        public int directionX = 0;
+        public int directionY = 0;
 
         public GameForm()
         {
@@ -145,10 +148,14 @@ namespace AC22005Assignment1
                     if (diffX > 0)
                     {
                         lblDirectionIndicator.Text = "Direction: left";
+                        directionX = -1;
+                        directionY = 0;
                     }
                     else
                     {
                         lblDirectionIndicator.Text = "Direction: Right";
+                        directionX = 1;
+                        directionY = 0;
                     }
                 }
                 else
@@ -156,10 +163,14 @@ namespace AC22005Assignment1
                     if (diffY > 0)
                     {
                         lblDirectionIndicator.Text = "Direction: Up";
+                        directionX = 0;
+                        directionY = -1;
                     }
                     else
                     {
                         lblDirectionIndicator.Text = "Direction: Down";
+                        directionX = 0;
+                        directionY = 1;
                     }
                 }
             }
@@ -202,7 +213,10 @@ namespace AC22005Assignment1
 
         private void drawForeground()
         {
-
+            foreach(Game.snake snakePart in g.fullSnake)
+            {
+                grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
+            }
         }
 
         private void TimerTick(object sender, EventArgs e)

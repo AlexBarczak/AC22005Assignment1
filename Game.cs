@@ -11,43 +11,46 @@ namespace AC22005Assignment1
     {
         GameForm form;
 
-        struct snake
+        public struct snake
         {
             public int posX;
             public int posY;
-            public direction currentDirection;
         }
 
-        enum direction
-        {
-            UP,
-            RIGHT,
-            DOWN,
-            LEFT
-        }
-
-        //static direction currentDirection;
-
-        int currentSnakeLength;
-        snake snakePart;
-        List<snake> fullSnake;
-        
+        int currentSnakeLength = 5;
+        public Queue<snake> fullSnake;
 
         public Game(GameForm form)
         {
-            snakePart = new snake();
-            snakePart.posX = 16;
-            snakePart.posY = 19;
-            snakePart.currentDirection = direction.UP;
-            currentSnakeLength = 1;
-            fullSnake = new List<snake> {snakePart};
+            fullSnake = new Queue<snake>();
+
+            snake snakeHead = new snake();
+
+            snakeHead.posX = 19;
+            snakeHead.posY = 19;
+
+            fullSnake.Enqueue(snakeHead);
             this.form = form;
         }
 
         public void mainGameLoop()
         {
             Debug.WriteLine("Balling");
-            // check snake can move
+
+            // 1 check snake can move
+            // 1.1 get the snake head i.e, the element stored in the first position on the snake, i.e fullsnake[0]
+            snake snakeHead = fullSnake.Peek();
+            snake newHead = new snake();
+            newHead.posX = (snakeHead.posX + form.directionX)%form.levelBitmap.Width;
+            newHead.posY = (snakeHead.posY + form.directionY)%form.levelBitmap.Height;
+            fullSnake.Enqueue(newHead);
+
+            if (fullSnake.Count() > currentSnakeLength)
+            {
+                fullSnake.Dequeue();
+            }
+
+
             // move snake
             // check if snake collides with ghosts
             // if eat ghost
