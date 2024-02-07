@@ -68,7 +68,6 @@ namespace AC22005Assignment1
         {
 
             InitializeComponent();
-            trBar.Value = 5;
             this.Icon = new Icon(@"../../../Snake.ico");
             //Size Form, load Bitmap
             this.AutoSize = true;
@@ -241,12 +240,6 @@ namespace AC22005Assignment1
         private void howToPlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void trBar_Scroll(object sender, EventArgs e)
-        {
-            lblVolume.Text = "" + trBar.Value;
-            
         }
 
         private void setVolume(int sliderVal)

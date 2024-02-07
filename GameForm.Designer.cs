@@ -34,10 +34,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trBar = new System.Windows.Forms.TrackBar();
-            this.lblVolume = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trBar)).BeginInit();
             this.SuspendLayout();
             // 
             // lblDirectionIndicator
@@ -89,31 +86,12 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // trBar
-            // 
-            this.trBar.Location = new System.Drawing.Point(12, 53);
-            this.trBar.Name = "trBar";
-            this.trBar.Size = new System.Drawing.Size(104, 45);
-            this.trBar.TabIndex = 2;
-            this.trBar.Scroll += new System.EventHandler(this.trBar_Scroll);
-            // 
-            // lblVolume
-            // 
-            this.lblVolume.AutoSize = true;
-            this.lblVolume.Location = new System.Drawing.Point(40, 35);
-            this.lblVolume.Name = "lblVolume";
-            this.lblVolume.Size = new System.Drawing.Size(38, 15);
-            this.lblVolume.TabIndex = 3;
-            this.lblVolume.Text = "label1";
-            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.YellowGreen;
             this.ClientSize = new System.Drawing.Size(893, 848);
-            this.Controls.Add(this.lblVolume);
-            this.Controls.Add(this.trBar);
             this.Controls.Add(this.lblDirectionIndicator);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -122,7 +100,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,7 +113,5 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem howToPlayToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private TrackBar trBar;
-        private Label lblVolume;
     }
 }
