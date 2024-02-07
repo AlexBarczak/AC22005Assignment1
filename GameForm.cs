@@ -14,7 +14,8 @@ namespace AC22005Assignment1
 {
     public partial class GameForm : Form
     {
-
+        public static bool isGameStart;
+        Game g;
         private Label timerLabel;
         private System.Windows.Forms.Timer timer;
         private int timeInSeconds;
@@ -26,7 +27,7 @@ namespace AC22005Assignment1
 
         Button[,] grid;
         Bitmap levelBitmap;
-        int[,] levelMapData;
+        static int[,] levelMapData;
         //levelMapData = new int[,]
         //{
         //    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
@@ -94,6 +95,7 @@ namespace AC22005Assignment1
                 for (int y = 0; y < levelBitmap.Height; y++)
                 {
                     grid[x, y] = new Button();
+                    grid[x, y].Name = x + "," + y;
                     grid[x, y].FlatStyle = FlatStyle.Flat;
                     grid[x, y].FlatAppearance.BorderSize = 0;
                     grid[x, y].SetBounds(xOffset + cellSize * x, yOffset + cellSize * y, cellSize, cellSize);
@@ -140,6 +142,20 @@ namespace AC22005Assignment1
             helpButton.Click += new EventHandler(this.HelpButtonClicked);
             helpButton.Anchor = AnchorStyles.None;
             Controls.Add(helpButton);
+
+            g = new Game();
+            isGameStart = false;
+            //g.printGridInts();
+        }
+
+        public static void updateGraphics()
+        {
+
+        }
+
+        public static int[,] getLevelMapData()
+        {
+            return levelMapData;
         }
 
         private void GridButtonClicked(object sender, EventArgs e)
@@ -155,6 +171,7 @@ namespace AC22005Assignment1
             int diffY = centerY - ((Button)sender).Location.Y - cellSize / 2;
 
             Debug.WriteLine("x: " + diffX.ToString() + " y: " + diffY.ToString());
+            Debug.WriteLine(((Button)sender).Name);
 
             // right, left or up, down
             if (Math.Abs(diffX) > Math.Abs(diffY))
@@ -180,6 +197,8 @@ namespace AC22005Assignment1
                 }
             }
 
+            if(!isGameStart) isGameStart = true;
+            g.mainGameLoop();
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -221,6 +240,11 @@ namespace AC22005Assignment1
         private void howToPlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void setVolume(int sliderVal)
+        {
+            //MenuForm.player.
         }
     }
 }
