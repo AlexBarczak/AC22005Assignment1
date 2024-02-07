@@ -42,10 +42,8 @@ namespace AC22005Assignment1
             snake snakeHead = fullSnake[0];
             snake newHead = new snake();
 
-            
-
-            newHead.posX = (snakeHead.posX + form.directionX)%form.levelBitmap.Width;
-            newHead.posY = (snakeHead.posY + form.directionY)%form.levelBitmap.Height;
+            newHead.posX = (snakeHead.posX + form.directionX + form.levelBitmap.Width) %form.levelBitmap.Width;
+            newHead.posY = (snakeHead.posY + form.directionY + form.levelBitmap.Height) %form.levelBitmap.Height;
             fullSnake.Insert(0, newHead);
 
             if (fullSnake.Count() > currentSnakeLength)
