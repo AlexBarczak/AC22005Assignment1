@@ -15,6 +15,7 @@ namespace AC22005Assignment1
     public partial class GameForm : Form
     {
         public bool isGameStart;
+        bool currentDirectionValid;
         Game g;
         private Label timerLabel;
         private System.Windows.Forms.Timer timer;
@@ -113,6 +114,7 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
+            currentDirectionValid= false;
         }
 
         public static void updateGraphics()
@@ -127,7 +129,11 @@ namespace AC22005Assignment1
 
         private void GridButtonClicked(object sender, EventArgs e)
         {
+            int oldDirectionX = directionX;
+            int oldDirectionY = directionY;
 
+            Game.snake currentSnakeHead = g.fullSnake[0];
+            Game.snake newSnakeHead = new Game.snake();
 
             // figure out center of grid
             int centerX = this.ClientSize.Width / 2;
@@ -172,6 +178,14 @@ namespace AC22005Assignment1
                         directionX = 0;
                         directionY = 1;
                     }
+                }
+                newSnakeHead.posX = (currentSnakeHead.posX + directionX + levelBitmap.Width) % levelBitmap.Width;
+                newSnakeHead.posY = (currentSnakeHead.posY + directionY + levelBitmap.Height) % levelBitmap.Height;
+
+                if (getLevelMapData()[newSnakeHead.posX, newSnakeHead.posY] == 0)
+                {
+                    directionX=oldDirectionX; 
+                    directionY=oldDirectionY;
                 }
             }
 

@@ -44,11 +44,14 @@ namespace AC22005Assignment1
 
             newHead.posX = (snakeHead.posX + form.directionX + form.levelBitmap.Width) %form.levelBitmap.Width;
             newHead.posY = (snakeHead.posY + form.directionY + form.levelBitmap.Height) %form.levelBitmap.Height;
-            fullSnake.Insert(0, newHead);
-
-            if (fullSnake.Count() > currentSnakeLength)
+            if (form.getLevelMapData()[newHead.posX, newHead.posY] == 255)
             {
-                fullSnake.RemoveAt(currentSnakeLength);
+                fullSnake.Insert(0, newHead);
+
+                if (fullSnake.Count() > currentSnakeLength)
+                {
+                    fullSnake.RemoveAt(currentSnakeLength);
+                }
             }
 
 
