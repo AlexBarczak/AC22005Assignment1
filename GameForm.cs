@@ -9,12 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace AC22005Assignment1
 {
     public partial class GameForm : Form
     {
         public bool isGameStart;
+        bool currentDirectionValid;
         Game g;
         private Label timerLabel;
         private System.Windows.Forms.Timer timer;
@@ -27,8 +29,11 @@ namespace AC22005Assignment1
         public const int cellSize = 20;
 
         Button[,] grid;
-        Bitmap levelBitmap;
+        public Bitmap levelBitmap;
         int[,] levelMapData;
+
+        public int directionX = 0;
+        public int directionY = 0;
 
         public GameForm()
         {
@@ -110,6 +115,7 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
+            currentDirectionValid= false;
         }
 
         public static void updateGraphics()
@@ -122,9 +128,14 @@ namespace AC22005Assignment1
             return levelMapData;
         }
 
-        private void GridButtonClicked(object sender, EventArgs e)
-        {
 
+    private void GridButtonClicked(object sender, EventArgs e)
+        {
+            int oldDirectionX = directionX;
+            int oldDirectionY = directionY;
+
+            Game.snake currentSnakeHead = g.fullSnake[0];
+            Game.snake newSnakeHead = new Game.snake();
 
             // figure out center of grid
             int centerX = this.ClientSize.Width / 2;
@@ -144,23 +155,31 @@ namespace AC22005Assignment1
                 {
                     if (diffX > 0)
                     {
-                        lblDirectionIndicator.Text = "Direction: left";
+                        goLeft();
                     }
                     else
                     {
-                        lblDirectionIndicator.Text = "Direction: Right";
+                        goRight();
                     }
                 }
                 else
                 {
                     if (diffY > 0)
                     {
-                        lblDirectionIndicator.Text = "Direction: Up";
+                        goUp();
                     }
                     else
                     {
-                        lblDirectionIndicator.Text = "Direction: Down";
+                        goDown();
                     }
+                }
+                newSnakeHead.posX = (currentSnakeHead.posX + directionX + levelBitmap.Width) % levelBitmap.Width;
+                newSnakeHead.posY = (currentSnakeHead.posY + directionY + levelBitmap.Height) % levelBitmap.Height;
+
+                if (getLevelMapData()[newSnakeHead.posX, newSnakeHead.posY] == 0)
+                {
+                    directionX=oldDirectionX; 
+                    directionY=oldDirectionY;
                 }
             }
 
@@ -173,10 +192,40 @@ namespace AC22005Assignment1
             }
             
         }
+
+        private void goUp()
+        {
+            lblDirectionIndicator.Text = "Direction: Up";
+            directionX = 0;
+            directionY = -1;
+        }
+
+        private void goDown()
+        {
+            lblDirectionIndicator.Text = "Direction: Down";
+            directionX = 0;
+            directionY = 1;
+        }
+
+        private void goLeft()
+        {
+            lblDirectionIndicator.Text = "Direction: left";
+            directionX = -1;
+            directionY = 0;
+        }
+
+        private void goRight()
+        {
+            lblDirectionIndicator.Text = "Direction: Right";
+            directionX = 1;
+            directionY = 0;
+        }
+
         private void gameLoop()
         {
             while (isGameStart)
             {
+
                 // draw background
                 drawBackground();
                 // run tick of game logic
@@ -202,7 +251,10 @@ namespace AC22005Assignment1
 
         private void drawForeground()
         {
-
+            foreach(Game.snake snakePart in g.fullSnake)
+            {
+                grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
+            }
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -259,6 +311,27 @@ namespace AC22005Assignment1
                 Program.musicPlaying = true;
                 Program.player.PlayLooping();
                 BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
+            }
+        }
+
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.W)
+            {
+                goUp();
+            } 
+            else if (e.KeyCode == Keys.S)
+            {
+                goDown();
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                goLeft();
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                goRight();
             }
         }
     }

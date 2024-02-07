@@ -11,43 +11,59 @@ namespace AC22005Assignment1
     {
         GameForm form;
 
-        struct snake
+        public struct snake
         {
             public int posX;
             public int posY;
-            public direction currentDirection;
         }
-
-        enum direction
+        private struct enemy
         {
-            UP,
-            RIGHT,
-            DOWN,
-            LEFT
+
         }
 
-        //static direction currentDirection;
-
-        int currentSnakeLength;
-        snake snakePart;
-        List<snake> fullSnake;
-        
+        int currentSnakeLength = 5;
+        public List<snake> fullSnake;
 
         public Game(GameForm form)
         {
-            snakePart = new snake();
-            snakePart.posX = 16;
-            snakePart.posY = 19;
-            snakePart.currentDirection = direction.UP;
-            currentSnakeLength = 1;
-            fullSnake = new List<snake> {snakePart};
+            fullSnake = new List<snake>();
+
+            snake snakeHead = new snake();
+
+            snakeHead.posX = 19;
+            snakeHead.posY = 19;
+
+            fullSnake.Add(snakeHead);
             this.form = form;
         }
 
         public void mainGameLoop()
         {
-            Debug.WriteLine("Balling");
+            // 1 check snake can move
+            // 1.1 get the snake head i.e, the element stored in the first position on the snake, i.e fullsnake[0]
+            snake snakeHead = fullSnake[0];
+            snake newHead = new snake();
 
+            newHead.posX = (snakeHead.posX + form.directionX + form.levelBitmap.Width) %form.levelBitmap.Width;
+            newHead.posY = (snakeHead.posY + form.directionY + form.levelBitmap.Height) %form.levelBitmap.Height;
+            if (form.getLevelMapData()[newHead.posX, newHead.posY] == 255)
+            {
+                fullSnake.Insert(0, newHead);
+
+                if (fullSnake.Count() > currentSnakeLength)
+                {
+                    fullSnake.RemoveAt(currentSnakeLength);
+                }
+            }
+
+
+            // move snake
+            // check if snake collides with ghosts
+            // if eat ghost
+            //      grow
+            // move ghosts
+            // if ghost collide with snake body
+            // snake explode
         }
 
         public void printGridInts()
