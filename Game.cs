@@ -39,8 +39,6 @@ namespace AC22005Assignment1
 
         public void mainGameLoop()
         {
-            Debug.WriteLine("Balling");
-
             // 1 check snake can move
             // 1.1 get the snake head i.e, the element stored in the first position on the snake, i.e fullsnake[0]
             snake snakeHead = fullSnake[0];

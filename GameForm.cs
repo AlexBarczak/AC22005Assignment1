@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace AC22005Assignment1
 {
@@ -125,7 +126,8 @@ namespace AC22005Assignment1
             return levelMapData;
         }
 
-        private void GridButtonClicked(object sender, EventArgs e)
+
+    private void GridButtonClicked(object sender, EventArgs e)
         {
 
 
@@ -147,30 +149,22 @@ namespace AC22005Assignment1
                 {
                     if (diffX > 0)
                     {
-                        lblDirectionIndicator.Text = "Direction: left";
-                        directionX = -1;
-                        directionY = 0;
+                        goLeft();
                     }
                     else
                     {
-                        lblDirectionIndicator.Text = "Direction: Right";
-                        directionX = 1;
-                        directionY = 0;
+                        goRight();
                     }
                 }
                 else
                 {
                     if (diffY > 0)
                     {
-                        lblDirectionIndicator.Text = "Direction: Up";
-                        directionX = 0;
-                        directionY = -1;
+                        goUp();
                     }
                     else
                     {
-                        lblDirectionIndicator.Text = "Direction: Down";
-                        directionX = 0;
-                        directionY = 1;
+                        goDown();
                     }
                 }
             }
@@ -184,10 +178,40 @@ namespace AC22005Assignment1
             }
             
         }
+
+        private void goUp()
+        {
+            lblDirectionIndicator.Text = "Direction: Up";
+            directionX = 0;
+            directionY = -1;
+        }
+
+        private void goDown()
+        {
+            lblDirectionIndicator.Text = "Direction: Down";
+            directionX = 0;
+            directionY = 1;
+        }
+
+        private void goLeft()
+        {
+            lblDirectionIndicator.Text = "Direction: left";
+            directionX = -1;
+            directionY = 0;
+        }
+
+        private void goRight()
+        {
+            lblDirectionIndicator.Text = "Direction: Right";
+            directionX = 1;
+            directionY = 0;
+        }
+
         private void gameLoop()
         {
             while (isGameStart)
             {
+
                 // draw background
                 drawBackground();
                 // run tick of game logic
@@ -273,6 +297,27 @@ namespace AC22005Assignment1
                 Program.musicPlaying = true;
                 Program.player.PlayLooping();
                 BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
+            }
+        }
+
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.W)
+            {
+                goUp();
+            } 
+            else if (e.KeyCode == Keys.S)
+            {
+                goDown();
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                goLeft();
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                goRight();
             }
         }
     }
