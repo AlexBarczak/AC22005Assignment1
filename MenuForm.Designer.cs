@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuForm));
-            btnStart = new Button();
+            btnStartMenu = new Button();
             btnExit = new Button();
             lblTitle = new Label();
             BtnMute = new Button();
             SuspendLayout();
             // 
-            // btnStart
+            // btnStartMenu
             // 
-            btnStart.Anchor = AnchorStyles.None;
-            btnStart.Location = new Point(505, 329);
-            btnStart.Margin = new Padding(3, 2, 3, 2);
-            btnStart.Name = "btnStart";
-            btnStart.Size = new Size(130, 54);
-            btnStart.TabIndex = 0;
-            btnStart.Text = "Start";
-            btnStart.UseVisualStyleBackColor = true;
-            btnStart.Click += btnStart_Click;
+            btnStartMenu.Anchor = AnchorStyles.None;
+            btnStartMenu.Location = new Point(505, 329);
+            btnStartMenu.Margin = new Padding(3, 2, 3, 2);
+            btnStartMenu.Name = "btnStartMenu";
+            btnStartMenu.Size = new Size(130, 54);
+            btnStartMenu.TabIndex = 0;
+            btnStartMenu.Text = "Start";
+            btnStartMenu.UseVisualStyleBackColor = true;
+            btnStartMenu.Click += btnStartMenu_Click;
             // 
             // btnExit
             // 
@@ -96,7 +96,7 @@
             Controls.Add(BtnMute);
             Controls.Add(lblTitle);
             Controls.Add(btnExit);
-            Controls.Add(btnStart);
+            Controls.Add(btnStartMenu);
             Margin = new Padding(3, 2, 3, 2);
             Name = "MenuForm";
             Text = "Menu";
@@ -107,7 +107,7 @@
 
         #endregion
 
-        private Button btnStart;
+        private Button btnStartMenu;
         private Button btnExit;
         private Label lblTitle;
         private Button BtnMute;

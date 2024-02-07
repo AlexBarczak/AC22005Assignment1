@@ -17,12 +17,12 @@ namespace AC22005Assignment1
         {
             return player;
         }
-        private void btnStart_Click(object sender, EventArgs e)
+        private void btnStartMenu_Click(object sender, EventArgs e)
         {
-            GameForm gameForm = new GameForm();
-            gameForm.Show();
+            NameForm nameForm = new NameForm();
+            nameForm.Show();
             this.Hide();
-            gameForm.FormClosed += (s, args) => Show();
+            nameForm.FormClosed += (s, args) => Show();
         }
         //Exit Button
         private void btnExit_Click(object sender, EventArgs e)

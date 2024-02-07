@@ -112,7 +112,7 @@ namespace AC22005Assignment1
 
             //Create timer
             timerLabel = new Label();
-            timerLabel.Text = "Time: -2 seconds";
+            timerLabel.Text = "Time: 0 seconds";
             timerLabel.AutoSize = true;
             timerLabel.Location = new Point((xOffset) * 2, 40);
             timerLabel.TextAlign = ContentAlignment.MiddleCenter;
