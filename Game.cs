@@ -16,6 +16,10 @@ namespace AC22005Assignment1
             public int posX;
             public int posY;
         }
+        private struct eneny
+        {
+
+        }
 
         int currentSnakeLength = 5;
         public List<snake> fullSnake;
