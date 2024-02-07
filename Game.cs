@@ -47,7 +47,14 @@ namespace AC22005Assignment1
         public void mainGameLoop()
         {
             Debug.WriteLine("Balling");
-
+            // check snake can move
+            // move snake
+            // check if snake collides with ghosts
+            // if eat ghost
+            //      grow
+            // move ghosts
+            // if ghost collide with snake body
+            // snake explode
         }
 
         public void printGridInts()
