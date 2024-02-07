@@ -18,18 +18,18 @@ namespace AC22005Assignment1
         }
 
         int currentSnakeLength = 5;
-        public Queue<snake> fullSnake;
+        public List<snake> fullSnake;
 
         public Game(GameForm form)
         {
-            fullSnake = new Queue<snake>();
+            fullSnake = new List<snake>();
 
             snake snakeHead = new snake();
 
             snakeHead.posX = 19;
             snakeHead.posY = 19;
 
-            fullSnake.Enqueue(snakeHead);
+            fullSnake.Add(snakeHead);
             this.form = form;
         }
 
@@ -39,15 +39,18 @@ namespace AC22005Assignment1
 
             // 1 check snake can move
             // 1.1 get the snake head i.e, the element stored in the first position on the snake, i.e fullsnake[0]
-            snake snakeHead = fullSnake.Peek();
+            snake snakeHead = fullSnake[0];
             snake newHead = new snake();
+
+            
+
             newHead.posX = (snakeHead.posX + form.directionX)%form.levelBitmap.Width;
             newHead.posY = (snakeHead.posY + form.directionY)%form.levelBitmap.Height;
-            fullSnake.Enqueue(newHead);
+            fullSnake.Insert(0, newHead);
 
             if (fullSnake.Count() > currentSnakeLength)
             {
-                fullSnake.Dequeue();
+                fullSnake.RemoveAt(currentSnakeLength);
             }
 
 
