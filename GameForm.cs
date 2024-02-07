@@ -182,6 +182,7 @@ namespace AC22005Assignment1
                 // run tick of game logic
                 g.mainGameLoop();
                 // draw foreground
+                drawForeground();
                 Thread.Sleep(100);
             }
         }
@@ -197,6 +198,11 @@ namespace AC22005Assignment1
                     else grid[x, y].BackColor = Color.Blue;
                 }
             }
+        }
+
+        private void drawForeground()
+        {
+
         }
 
         private void TimerTick(object sender, EventArgs e)
