@@ -32,6 +32,7 @@
             btnStart = new Button();
             btnExit = new Button();
             lblTitle = new Label();
+            BtnMute = new Button();
             SuspendLayout();
             // 
             // btnStart
@@ -62,12 +63,27 @@
             // 
             lblTitle.Anchor = AnchorStyles.None;
             lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.Transparent;
+            lblTitle.BorderStyle = BorderStyle.Fixed3D;
             lblTitle.Font = new Font("Stencil", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTitle.Location = new Point(429, 237);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(289, 57);
+            lblTitle.Size = new Size(291, 59);
             lblTitle.TabIndex = 2;
             lblTitle.Text = "Snake-Man";
+            // 
+            // BtnMute
+            // 
+            BtnMute.Anchor = AnchorStyles.None;
+            BtnMute.BackColor = Color.Linen;
+            BtnMute.BackgroundImage = (Image)resources.GetObject("BtnMute.BackgroundImage");
+            BtnMute.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnMute.Location = new Point(1057, 28);
+            BtnMute.Name = "BtnMute";
+            BtnMute.Size = new Size(58, 62);
+            BtnMute.TabIndex = 3;
+            BtnMute.UseVisualStyleBackColor = false;
+            BtnMute.Click += BtnMute_Click;
             // 
             // MenuForm
             // 
@@ -77,6 +93,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1143, 673);
+            Controls.Add(BtnMute);
             Controls.Add(lblTitle);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
@@ -93,5 +110,6 @@
         private Button btnStart;
         private Button btnExit;
         private Label lblTitle;
+        private Button BtnMute;
     }
 }

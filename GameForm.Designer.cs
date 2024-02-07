@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             lblDirectionIndicator = new Label();
             menuStrip1 = new MenuStrip();
             optionsToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             howToPlayToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            BtnMute = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -42,7 +44,7 @@
             lblDirectionIndicator.Anchor = AnchorStyles.None;
             lblDirectionIndicator.AutoSize = true;
             lblDirectionIndicator.Font = new Font("Ravie", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDirectionIndicator.Location = new Point(270, 745);
+            lblDirectionIndicator.Location = new Point(359, 745);
             lblDirectionIndicator.Name = "lblDirectionIndicator";
             lblDirectionIndicator.Size = new Size(325, 39);
             lblDirectionIndicator.TabIndex = 0;
@@ -53,7 +55,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(893, 24);
+            menuStrip1.Size = new Size(1070, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -85,12 +87,26 @@
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
+            // BtnMute
+            // 
+            BtnMute.Anchor = AnchorStyles.None;
+            BtnMute.BackColor = Color.Linen;
+            BtnMute.BackgroundImage = (Image)resources.GetObject("BtnMute.BackgroundImage");
+            BtnMute.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnMute.Location = new Point(1057, 28);
+            BtnMute.Name = "BtnMute";
+            BtnMute.Size = new Size(58, 62);
+            BtnMute.TabIndex = 4;
+            BtnMute.UseVisualStyleBackColor = false;
+            BtnMute.Click += BtnMute_Click;
+            // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.YellowGreen;
-            ClientSize = new Size(893, 848);
+            ClientSize = new Size(1070, 848);
+            Controls.Add(BtnMute);
             Controls.Add(lblDirectionIndicator);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -112,5 +128,6 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem howToPlayToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Button BtnMute;
     }
 }
