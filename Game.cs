@@ -9,6 +9,8 @@ namespace AC22005Assignment1
 {
     internal class Game
     {
+        GameForm form;
+
         struct snake
         {
             public int posX;
@@ -31,7 +33,7 @@ namespace AC22005Assignment1
         List<snake> fullSnake;
         
 
-        public Game()
+        public Game(GameForm form)
         {
             snakePart = new snake();
             snakePart.posX = 16;
@@ -39,24 +41,22 @@ namespace AC22005Assignment1
             snakePart.currentDirection = direction.UP;
             currentSnakeLength = 1;
             fullSnake = new List<snake> {snakePart};
+            this.form = form;
         }
 
         public void mainGameLoop()
         {
-            while (GameForm.isGameStart)
-            {
-
-            }
+            Debug.WriteLine("Balling");
         }
 
         public void printGridInts()
         {
 
-            for(int y = 0; y < GameForm.getLevelMapData().GetLength(0); y++)
+            for(int y = 0; y < form.getLevelMapData().GetLength(0); y++)
             {
-                for(int x = 0; x < GameForm.getLevelMapData().GetLength(0); x++)
+                for(int x = 0; x < form.getLevelMapData().GetLength(0); x++)
                 {
-                    Debug.Write(GameForm.getLevelMapData()[x,y]);
+                    Debug.Write(form.getLevelMapData()[x,y]);
                 }
                 Debug.Write('\n');
             }
