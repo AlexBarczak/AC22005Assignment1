@@ -194,8 +194,8 @@ namespace AC22005Assignment1
             {
                 ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
                 ghost.posY = (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
-                //ghost.currentDirX = ghost.currentDirX;
-                //ghost.currentDirY = ghost.currentDirY;
+                ghost.currentDirX = dirToSnakeX;
+                ghost.currentDirY = dirToSnakeY;
             }
             else
             {
