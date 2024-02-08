@@ -131,12 +131,6 @@ namespace AC22005Assignment1
 
     private void GridButtonClicked(object sender, EventArgs e)
         {
-            int oldDirectionX = directionX;
-            int oldDirectionY = directionY;
-
-            Game.snake currentSnakeHead = g.fullSnake[0];
-            Game.snake newSnakeHead = new Game.snake();
-
             // figure out center of grid
             int centerX = this.ClientSize.Width / 2;
             int centerY = this.ClientSize.Height / 2;
@@ -172,14 +166,6 @@ namespace AC22005Assignment1
                     {
                         goDown();
                     }
-                }
-                newSnakeHead.posX = (currentSnakeHead.posX + directionX + levelBitmap.Width) % levelBitmap.Width;
-                newSnakeHead.posY = (currentSnakeHead.posY + directionY + levelBitmap.Height) % levelBitmap.Height;
-
-                if (getLevelMapData()[newSnakeHead.posX, newSnakeHead.posY] == 0)
-                {
-                    directionX=oldDirectionX; 
-                    directionY=oldDirectionY;
                 }
             }
 
