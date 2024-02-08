@@ -12,7 +12,7 @@ namespace AC22005Assignment1
         GameForm form;
         Random rand = new Random();
 
-        public struct snake
+        public struct Snake
         {
             public int posX;
             public int posY;
@@ -20,24 +20,29 @@ namespace AC22005Assignment1
             public int currentDirY;
             public int timeAtWall;
         }
-        public struct enemy
+        public struct Enemy
         {
             public int posX;
             public int posY;
             public int currentDirX;
             public int currentDirY;
+            public int dirToSnakeX;
+            public int dirToSnakeY;
+            public bool movingThisTurn;
         }
 
+        // the snake will grow in length by 1 for every 3 enemies it eats
         int currentSnakeLength = 9;
-        public List<enemy> enemies;
-        public List<snake> fullSnake;
+        int snakeHunger = 3;
+        public List<Enemy> enemies;
+        public List<Snake> fullSnake;
 
         public Game(GameForm form)
         {
-            fullSnake = new List<snake>();
-            enemies = new List<enemy>();
+            fullSnake = new List<Snake>();
+            enemies = new List<Enemy>();
 
-            snake snakeHead = new snake();
+            Snake snakeHead = new Snake();
 
             snakeHead.posX = 16;
             snakeHead.posY = 16;
@@ -51,32 +56,15 @@ namespace AC22005Assignment1
         public void mainGameLoop()
         {
             moveTheSnake();
+            eatGhosts();
+            moveEnemies();
+            eatGhosts();
+            biteSnake();
+            spawnEnemies();
+        }
 
-            // check if snake collides with ghosts
-
-            List<enemy> ghostsToRemove = new List<enemy>();
-            foreach(enemy ghost in enemies)
-            {
-                if (fullSnake[0].posX == ghost.posX && fullSnake[0].posY == ghost.posY)
-                {
-                    currentSnakeLength += 1;
-                    ghostsToRemove.Add(ghost);
-                }
-            }
-
-            foreach(enemy ghost in ghostsToRemove)
-            {
-                enemies.Remove(ghost);
-            }
-
-
-            // if eat ghost
-            //      grow
-            // move ghosts
-            // if ghost collide with snake body
-            // snake explode
-
-
+        private void spawnEnemies()
+        {
             // possibly spawn in an enemy
             // ticks happen ten times per second,
             // 5 seconds per enemy spawning in will be about 1/50 chance per tick, this chance is further reduced by the restrictions on
@@ -86,19 +74,165 @@ namespace AC22005Assignment1
                 int spawnNum = rand.Next(0, form.enemySpawns.Count());
                 if (Math.Max(form.enemySpawns[spawnNum].x - fullSnake[0].posX, form.enemySpawns[spawnNum].y - fullSnake[0].posY) > 4)
                 {
-                    enemy newEnemy = new enemy();
+                    Enemy newEnemy = new Enemy();
                     newEnemy.posX = form.enemySpawns[spawnNum].x;
                     newEnemy.posY = form.enemySpawns[spawnNum].y;
+                    newEnemy.movingThisTurn = false;
+
+                    // provide it a starting direction at random
+
+                    int startDir = rand.Next(4);
+                    switch (startDir)
+                    {
+                        // up, down, left, right
+                        case 0:
+                            newEnemy.currentDirX = 0;
+                            newEnemy.currentDirY = 1;
+                            break;
+                        case 1:
+                            newEnemy.currentDirX = 0;
+                            newEnemy.currentDirY = -1;
+                            break;
+                        case 2:
+                            newEnemy.currentDirX = 1;
+                            newEnemy.currentDirY = 0;
+                            break;
+                        case 3:
+                            newEnemy.currentDirX = -1;
+                            newEnemy.currentDirY = 0;
+                            break;
+                    }
 
                     enemies.Add(newEnemy);
                 }
             }
         }
 
+        private void biteSnake()
+        {
+
+        }
+
+
+        private void eatGhosts()
+        {
+            List<Enemy> ghostsToRemove = new List<Enemy>();
+            foreach (Enemy ghost in enemies)
+            {
+                if (fullSnake[0].posX == ghost.posX && fullSnake[0].posY == ghost.posY)
+                {
+                    currentSnakeLength += 1;
+                    ghostsToRemove.Add(ghost);
+                }
+            }
+
+            foreach (Enemy ghost in ghostsToRemove)
+            {
+                enemies.Remove(ghost);
+            }
+        }
+
+        private void moveEnemies()
+        {
+            // enemies will move in a near identical manner to the snake functionally speaking
+            // they figure out the direction they wanna go and then they go for it whenever possible
+            // one difference between the snake and enemies will be that the enemies move at half the speed
+            
+            // creating new list and swapping lists due to foreach breaking if you alter contents
+            List<Enemy> newEnemyPositions = new List<Enemy>(enemies.Count());
+            foreach(Enemy ghost in enemies)
+            {
+                newEnemyPositions.Add(moveEnemy(ghost));
+            }
+
+            enemies = newEnemyPositions;
+        }
+
+        private Enemy moveEnemy(Enemy ghost)
+        {
+            if (!ghost.movingThisTurn)
+            {
+                ghost.movingThisTurn = true;
+                return ghost;
+            }
+            
+            ghost.movingThisTurn = false;
+
+            // first determine the direction to reach the snake's centermost section,
+            // using the center to make sure that the enemies don't just trail behind the snake's tail
+
+            int snakePiece = fullSnake.Count() / 2;
+
+            int dirToSnakeX = fullSnake[snakePiece].posX - ghost.posX;
+            int dirToSnakeY = fullSnake[snakePiece].posY - ghost.posY;
+
+            Debug.WriteLine("x " + dirToSnakeX);
+            Debug.WriteLine("y " + dirToSnakeY);
+
+            if (Math.Abs(dirToSnakeX) > Math.Abs(dirToSnakeY))
+            {
+                dirToSnakeY = 0;
+                dirToSnakeX = dirToSnakeX / Math.Abs(dirToSnakeX);
+            }
+            else
+            {
+                dirToSnakeY = dirToSnakeY / Math.Abs(dirToSnakeY);
+                dirToSnakeX = 0;
+            }
+
+            if (form.getLevelMapData()[(ghost.posX + dirToSnakeX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                                       (ghost.posY + dirToSnakeY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0
+                                       && !(ghost.currentDirX + dirToSnakeX == 0 && ghost.currentDirY + dirToSnakeY == 0))
+            {
+                ghost.posX = (ghost.posX + dirToSnakeX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                ghost.posY = (ghost.posY + dirToSnakeY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                ghost.currentDirX = dirToSnakeX;
+                ghost.currentDirY = dirToSnakeY;
+            }
+            else if (form.getLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                                            (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
+            {
+                ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                ghost.posY = (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                //ghost.currentDirX = ghost.currentDirX;
+                //ghost.currentDirY = ghost.currentDirY;
+            }
+            else
+            {
+                int temp = ghost.currentDirX;
+                ghost.currentDirX = ghost.currentDirY;
+                ghost.currentDirY = temp;
+
+                // randomize between left and right
+                if (rand.Next(0, 2) == 1)
+                {
+                    ghost.currentDirX = -ghost.currentDirX;
+                    ghost.currentDirY = -ghost.currentDirY;
+                }
+
+                if (form.getLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                                           (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
+                {
+                    ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                    ghost.posY = (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                }
+                else
+                {
+                    ghost.currentDirX = -ghost.currentDirX;
+                    ghost.currentDirY = -ghost.currentDirY;
+
+                    ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                    ghost.posY = (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                }
+            }
+
+            return ghost;
+        }
+
         private void moveTheSnake()
         {
-            snake snakeHead = fullSnake[0];
-            snake newHead = new snake();
+            Snake snakeHead = fullSnake[0];
+            Snake newHead = new Snake();
             newHead.timeAtWall = 0;
 
             // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
@@ -141,7 +275,6 @@ namespace AC22005Assignment1
                     // must do this due to c# being a prick about using references
                     snakeHead.timeAtWall += 1;
                     fullSnake[0] = snakeHead;
-                    Debug.WriteLine(snakeHead.timeAtWall);
                     return;
                 }
 

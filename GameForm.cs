@@ -250,12 +250,12 @@ namespace AC22005Assignment1
 
         private void drawForeground()
         {
-            foreach(Game.snake snakePart in g.fullSnake)
+            foreach(Game.Snake snakePart in g.fullSnake)
             {
                 grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
             }
 
-            foreach(Game.enemy enemy in g.enemies)
+            foreach(Game.Enemy enemy in g.enemies)
             {
                 grid[enemy.posX, enemy.posY].BackColor = Color.MediumPurple;
             }
