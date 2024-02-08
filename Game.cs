@@ -44,11 +44,8 @@ namespace AC22005Assignment1
         public void mainGameLoop()
         {
             // 1 check snake can move
-            // 1.1 get the snake head i.e, the element stored in the first position on the snake, i.e fullsnake[0]
             snake snakeHead = fullSnake[0];
             snake newHead = new snake();
-
-            // 1.2 check if the snake can move in the direction the player wants to go
 
             // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
             // If it did, we would have a outOfRange Exception as soon as the snake travels into the left or top sides of the map
@@ -76,6 +73,38 @@ namespace AC22005Assignment1
                 newHead.currentDirX = snakeHead.currentDirX;
                 newHead.currentDirY = snakeHead.currentDirY;
                 fullSnake.Insert(0, newHead);
+            }
+
+            // if the snake cannot move where the player wants him to go, and the snake cannot keep moving straight ahead, have the snake attempt to move left or right
+            else
+            {
+                // if the snake has hit a wall then the current direction is not viable, we do not want the snake to turn around either
+                // we will swap the value of the snakes current x direction and current y direction until it finds a suitable path
+
+                int temp = snakeHead.currentDirX;
+                snakeHead.currentDirX = snakeHead.currentDirY;
+                snakeHead.currentDirY = temp;
+
+                if (form.getLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                                            (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] == 255)
+                {
+                    newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                    newHead.posY = (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                    newHead.currentDirX = snakeHead.currentDirX;
+                    newHead.currentDirY = snakeHead.currentDirY;
+                    fullSnake.Insert(0, newHead);
+                }
+                else
+                {
+                    snakeHead.currentDirX = -snakeHead.currentDirX;
+                    snakeHead.currentDirY = -snakeHead.currentDirY;
+
+                    newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                    newHead.posY = (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                    newHead.currentDirX = snakeHead.currentDirX;
+                    newHead.currentDirY = snakeHead.currentDirY;
+                    fullSnake.Insert(0, newHead);
+                }
             }
 
 
