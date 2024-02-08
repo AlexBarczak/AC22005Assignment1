@@ -35,6 +35,16 @@ namespace AC22005Assignment1
         public int directionX = 0;
         public int directionY = 0;
 
+        // slightly annoying way of doing this but it's easily enforced in keeping each map
+        // having 12 enemy spawns
+        public List<vector2> enemySpawns = new List<vector2>();
+
+        public struct vector2
+        {
+            public int x;
+            public int y;
+        }
+
         public GameForm()
         {
 
@@ -72,7 +82,14 @@ namespace AC22005Assignment1
 
                     if (levelMapData[x, y] == EMPTY_TILE) grid[x, y].BackColor = Color.White;
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
-                    else if (levelMapData[x, y] == SPAWN_TILE) grid[x, y].BackColor = Color.White;
+                    else if (levelMapData[x, y] == SPAWN_TILE)
+                    {
+                        vector2 position = new vector2();
+                        position.x = x;
+                        position.y = y;
+                        enemySpawns.Add(position);
+                        grid[x, y].BackColor = Color.White;
+                    }
                     else grid[x, y].BackColor = Color.Blue;
 
                     grid[x, y].Click += new EventHandler(this.GridButtonClicked);
@@ -116,6 +133,7 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
+            gameThread = new Thread(this.gameLoop);
         }
 
         public int[,] getLevelMapData()
@@ -168,7 +186,6 @@ namespace AC22005Assignment1
             {
                 isGameStart = true;
                 Debug.WriteLine("begin the balling");
-                gameThread = new Thread(this.gameLoop);
                 gameThread.Start();
             }
             

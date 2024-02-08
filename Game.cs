@@ -11,6 +11,7 @@ namespace AC22005Assignment1
     {
         GameForm form;
         Random rand = new Random();
+        List<enemy> enemies = new List<enemy>();
 
         public struct snake
         {
@@ -21,7 +22,10 @@ namespace AC22005Assignment1
         }
         private struct enemy
         {
-
+            public int posX;
+            public int posY;
+            public int currentDirX;
+            public int currentDirY;
         }
 
         int currentSnakeLength = 9;
@@ -52,6 +56,9 @@ namespace AC22005Assignment1
             // move ghosts
             // if ghost collide with snake body
             // snake explode
+        
+            // possibly spawn in an enemy
+            
         }
 
         private void moveTheSnake()
@@ -105,7 +112,7 @@ namespace AC22005Assignment1
                 }
 
                 if (form.getLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
-                                            (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
+                                           (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
                 {
                     newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
                     newHead.posY = (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
