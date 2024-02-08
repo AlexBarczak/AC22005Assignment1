@@ -15,6 +15,8 @@ namespace AC22005Assignment1
         {
             public int posX;
             public int posY;
+            public int currentDirX;
+            public int currentDirY;
         }
         private struct enemy
         {
@@ -30,8 +32,10 @@ namespace AC22005Assignment1
 
             snake snakeHead = new snake();
 
-            snakeHead.posX = 19;
-            snakeHead.posY = 19;
+            snakeHead.posX = 16;
+            snakeHead.posY = 16;
+            snakeHead.currentDirX = 0;
+            snakeHead.currentDirY = 0;
 
             fullSnake.Add(snakeHead);
             this.form = form;
@@ -44,18 +48,42 @@ namespace AC22005Assignment1
             snake snakeHead = fullSnake[0];
             snake newHead = new snake();
 
-            newHead.posX = (snakeHead.posX + form.directionX + form.levelBitmap.Width) %form.levelBitmap.Width;
-            newHead.posY = (snakeHead.posY + form.directionY + form.levelBitmap.Height) %form.levelBitmap.Height;
-            if (form.getLevelMapData()[newHead.posX, newHead.posY] == 255)
-            {
-                fullSnake.Insert(0, newHead);
+            // 1.2 check if the snake can move in the direction the player wants to go
 
-                if (fullSnake.Count() > currentSnakeLength)
-                {
-                    fullSnake.RemoveAt(currentSnakeLength);
-                }
+            // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
+            // If it did, we would have a outOfRange Exception as soon as the snake travels into the left or top sides of the map
+            if (form.getLevelMapData()[(snakeHead.posX + form.directionX + form.levelBitmap.Width) % form.levelBitmap.Width, 
+                                       (snakeHead.posY + form.directionY + form.levelBitmap.Height) % form.levelBitmap.Height] == 255
+
+                                       // check that if the direction the snake is headed is opposite to the direction the player wants to go are opposite,
+                                       // if that is the case, do not run this segment
+                                       
+                                       && !(snakeHead.currentDirX + form.directionX == 0 && snakeHead.currentDirY + form.directionY == 0))
+            {
+                newHead.posX = (snakeHead.posX + form.directionX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                newHead.posY = (snakeHead.posY + form.directionY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                newHead.currentDirX = form.directionX;
+                newHead.currentDirY = form.directionY;
+                fullSnake.Insert(0, newHead);
+            } 
+            
+            // if the snake cannot move the direction player wants to go, check if the snake can move in it's current direction
+            else if (form.getLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                                            (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] == 255) 
+            {
+                newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
+                newHead.posY = (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
+                newHead.currentDirX = snakeHead.currentDirX;
+                newHead.currentDirY = snakeHead.currentDirY;
+                fullSnake.Insert(0, newHead);
             }
 
+
+            // If the snake has not grown, cut off the oldest tailpiece
+            if (fullSnake.Count() > currentSnakeLength)
+            {
+                fullSnake.RemoveAt(currentSnakeLength);
+            }
 
             // move snake
             // check if snake collides with ghosts
