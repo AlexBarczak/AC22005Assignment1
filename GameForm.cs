@@ -254,6 +254,11 @@ namespace AC22005Assignment1
             {
                 grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
             }
+
+            foreach(Game.enemy enemy in g.enemies)
+            {
+                grid[enemy.posX, enemy.posY].BackColor = Color.MediumPurple;
+            }
         }
 
         private void TimerTick(object sender, EventArgs e)

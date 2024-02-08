@@ -11,7 +11,6 @@ namespace AC22005Assignment1
     {
         GameForm form;
         Random rand = new Random();
-        List<enemy> enemies = new List<enemy>();
 
         public struct snake
         {
@@ -20,7 +19,7 @@ namespace AC22005Assignment1
             public int currentDirX;
             public int currentDirY;
         }
-        private struct enemy
+        public struct enemy
         {
             public int posX;
             public int posY;
@@ -29,11 +28,13 @@ namespace AC22005Assignment1
         }
 
         int currentSnakeLength = 9;
+        public List<enemy> enemies;
         public List<snake> fullSnake;
 
         public Game(GameForm form)
         {
             fullSnake = new List<snake>();
+            enemies = new List<enemy>();
 
             snake snakeHead = new snake();
 
@@ -51,14 +52,46 @@ namespace AC22005Assignment1
             moveTheSnake();
 
             // check if snake collides with ghosts
+
+            List<enemy> ghostsToRemove = new List<enemy>();
+            foreach(enemy ghost in enemies)
+            {
+                if (fullSnake[0].posX == ghost.posX && fullSnake[0].posY == ghost.posY)
+                {
+                    currentSnakeLength += 1;
+                    ghostsToRemove.Add(ghost);
+                }
+            }
+
+            foreach(enemy ghost in ghostsToRemove)
+            {
+                enemies.Remove(ghost);
+            }
+
+
             // if eat ghost
             //      grow
             // move ghosts
             // if ghost collide with snake body
             // snake explode
-        
+
+
             // possibly spawn in an enemy
-            
+            // ticks happen ten times per second,
+            // 5 seconds per enemy spawning in will be about 1/50 chance per tick, this chance is further reduced by the restrictions on
+            // available positions by proximity to snake head 
+            if (rand.Next(10) == 0)
+            {
+                int spawnNum = rand.Next(0, form.enemySpawns.Count());
+                if (Math.Max(form.enemySpawns[spawnNum].x - fullSnake[0].posX, form.enemySpawns[spawnNum].y - fullSnake[0].posY) > 4)
+                {
+                    enemy newEnemy = new enemy();
+                    newEnemy.posX = form.enemySpawns[spawnNum].x;
+                    newEnemy.posY = form.enemySpawns[spawnNum].y;
+
+                    enemies.Add(newEnemy);
+                }
+            }
         }
 
         private void moveTheSnake()
