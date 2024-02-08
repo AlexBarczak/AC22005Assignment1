@@ -26,8 +26,6 @@ namespace AC22005Assignment1
             public int posY;
             public int currentDirX;
             public int currentDirY;
-            public int dirToSnakeX;
-            public int dirToSnakeY;
             public bool movingThisTurn;
         }
 
@@ -110,7 +108,25 @@ namespace AC22005Assignment1
 
         private void biteSnake()
         {
-
+            // Say the snake is poisonous to the enemies and it kill them wen they bite it
+            List<Enemy> survivingEnemies = new List<Enemy>();
+            foreach(Enemy ghost in enemies)
+            {
+                survivingEnemies.Add(ghost);
+                for (int i = 1; i < fullSnake.Count(); i++)
+                {
+                    if (ghost.posX == fullSnake[i].posX && ghost.posY == fullSnake[i].posY)
+                    {
+                        fullSnake.RemoveRange(i, fullSnake.Count() - i);
+                        fullSnake.TrimExcess();
+                        currentSnakeLength = fullSnake.Count();
+                        survivingEnemies.Remove(ghost);
+                        break;
+                    }
+                }
+                
+            }
+            enemies = survivingEnemies;
         }
 
 
@@ -121,7 +137,12 @@ namespace AC22005Assignment1
             {
                 if (fullSnake[0].posX == ghost.posX && fullSnake[0].posY == ghost.posY)
                 {
-                    currentSnakeLength += 1;
+                    snakeHunger -= 1;
+                    if (snakeHunger <= 0)
+                    {
+                        snakeHunger = 3;
+                        currentSnakeLength += 1;
+                    }
                     ghostsToRemove.Add(ghost);
                 }
             }
@@ -166,9 +187,6 @@ namespace AC22005Assignment1
             int dirToSnakeX = fullSnake[snakePiece].posX - ghost.posX;
             int dirToSnakeY = fullSnake[snakePiece].posY - ghost.posY;
 
-            Debug.WriteLine("x " + dirToSnakeX);
-            Debug.WriteLine("y " + dirToSnakeY);
-
             if (Math.Abs(dirToSnakeX) > Math.Abs(dirToSnakeY))
             {
                 dirToSnakeY = 0;
@@ -194,8 +212,6 @@ namespace AC22005Assignment1
             {
                 ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
                 ghost.posY = (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height;
-                ghost.currentDirX = dirToSnakeX;
-                ghost.currentDirY = dirToSnakeY;
             }
             else
             {
@@ -316,19 +332,6 @@ namespace AC22005Assignment1
             if (fullSnake.Count() > currentSnakeLength)
             {
                 fullSnake.RemoveAt(currentSnakeLength);
-            }
-        }
-
-        public void printGridInts()
-        {
-
-            for(int y = 0; y < form.getLevelMapData().GetLength(0); y++)
-            {
-                for(int x = 0; x < form.getLevelMapData().GetLength(0); x++)
-                {
-                    Debug.Write(form.getLevelMapData()[x,y]);
-                }
-                Debug.Write('\n');
             }
         }
     }
