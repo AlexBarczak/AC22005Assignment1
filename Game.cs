@@ -18,6 +18,7 @@ namespace AC22005Assignment1
             public int posY;
             public int currentDirX;
             public int currentDirY;
+            public int timeAtWall;
         }
         public struct enemy
         {
@@ -80,7 +81,7 @@ namespace AC22005Assignment1
             // ticks happen ten times per second,
             // 5 seconds per enemy spawning in will be about 1/50 chance per tick, this chance is further reduced by the restrictions on
             // available positions by proximity to snake head 
-            if (rand.Next(10) == 0)
+            if (rand.Next(15) == 0)
             {
                 int spawnNum = rand.Next(0, form.enemySpawns.Count());
                 if (Math.Max(form.enemySpawns[spawnNum].x - fullSnake[0].posX, form.enemySpawns[spawnNum].y - fullSnake[0].posY) > 4)
@@ -98,6 +99,7 @@ namespace AC22005Assignment1
         {
             snake snakeHead = fullSnake[0];
             snake newHead = new snake();
+            newHead.timeAtWall = 0;
 
             // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
             // If it did, we would have a outOfRange Exception as soon as the snake travels into the left or top sides of the map
@@ -132,6 +134,16 @@ namespace AC22005Assignment1
             {
                 // if the snake has hit a wall then the current direction is not viable, we do not want the snake to turn around either
                 // we will swap the value of the snakes current x direction and current y direction D it finds a suitable path
+
+                if (snakeHead.timeAtWall < 2)
+                {
+
+                    // must do this due to c# being a prick about using references
+                    snakeHead.timeAtWall += 1;
+                    fullSnake[0] = snakeHead;
+                    Debug.WriteLine(snakeHead.timeAtWall);
+                    return;
+                }
 
                 int temp = snakeHead.currentDirX;
                 snakeHead.currentDirX = snakeHead.currentDirY;
