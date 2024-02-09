@@ -356,28 +356,28 @@ namespace AC22005Assignment1
             Label LblGameplay = new Label();
             LblGameplay.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
             LblGameplay.ForeColor = Color.Black;
-            LblGameplay.SetBounds(50, 100, 600,100);
+            LblGameplay.SetBounds(50, 100, 600,150);
             LblGameplay.Text = "Upon initialising Snake-man, you will be met by the maze grid upon which Snake-man must traverse. In order to start the game, one must click on the grid in any part of it to spawn our glorious Snake. He will proceed to move around the maze, directed by clicking on the various sides of the grid that correspond to the desired direction: left, right, up and down. If preferred, one can also use WASD keyboard inputs, however you cannot start the game that way.";
             HelpForm.Controls.Add(LblGameplay);
 
             Label LblGameplay2 = new Label();
             LblGameplay2.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
             LblGameplay2.ForeColor = Color.Black;
-            LblGameplay2.SetBounds(50, 275, 600, 100);
+            LblGameplay2.SetBounds(50, 275, 600, 150);
             LblGameplay2.Text = "Be warned, however, as upon the spawning of our beloved snake into the maze, the Snake's blasted enemies shall also begin to spawn randomly around the grid space, intent on squashing the beautiful life of our beloved slithering friend. In order to counteract this, Snake-man must fight back by consuming each enemy with his head, however if Snake-man encounters an enemy on his body, he will lose a life point - out of his total of 3 - and decay in colour!";
             HelpForm.Controls.Add(LblGameplay2);
 
             Label LblGameplay3 = new Label();
             LblGameplay3.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
             LblGameplay3.ForeColor = Color.Black;
-            LblGameplay3.SetBounds(50, 450, 600, 100);
+            LblGameplay3.SetBounds(50, 450, 600, 150);
             LblGameplay3.Text = "However, most fortuitously, Snake-man grows stronger through the blood of his enemies, and will receive additional snake segments for every 2 enemies consumed, branching from his minimum of 4 segments to truly infinite possibilities. Alongside bodily growth, the score counter will increase likewise, for every enemy consumed.";
             HelpForm.Controls.Add(LblGameplay3);
 
             Label LblGameplay4 = new Label();
             LblGameplay4.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
             LblGameplay4.ForeColor = Color.Black;
-            LblGameplay4.SetBounds(50, 625, 600, 100);
+            LblGameplay4.SetBounds(50, 625, 600, 150);
             LblGameplay4.Text = "Finally, the grid space of Snake-man's domain allows for him to travel across the edges of the grid to the other side, truly groundbreaking. Alongside this, Snake-man should be noted of his tendency to act irrationally and independently of his ever loving protector if left idle for too long.";
             HelpForm.Controls.Add(LblGameplay4);
 
