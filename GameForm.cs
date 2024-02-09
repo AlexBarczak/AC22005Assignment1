@@ -136,6 +136,11 @@ namespace AC22005Assignment1
             gameThread = new Thread(this.gameLoop);
         }
 
+        internal void UpdateScoreLbl()
+        {
+            lbl_score.Text = "Score: " + g.score.ToString();
+        }
+
         public int[,] getLevelMapData()
         {
             return levelMapData;
@@ -230,6 +235,7 @@ namespace AC22005Assignment1
                 g.mainGameLoop();
                 // draw foreground
                 drawForeground();
+                UpdateScoreLbl();
                 Thread.Sleep(100);
             }
         }

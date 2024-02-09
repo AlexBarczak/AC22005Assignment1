@@ -12,6 +12,8 @@ namespace AC22005Assignment1
         GameForm form;
         Random rand = new Random();
 
+        public int score = 0;
+
         public struct Snake
         {
             public int posX;
@@ -150,6 +152,7 @@ namespace AC22005Assignment1
                         currentSnakeLength += 1;
                     }
                     ghostsToRemove.Add(ghost);
+                    score += 1;
                 }
             }
 
