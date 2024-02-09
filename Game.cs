@@ -30,7 +30,7 @@ namespace AC22005Assignment1
         }
 
         // the snake will grow in length by 1 for every 3 enemies it eats
-        int currentSnakeLength = 9;
+        int currentSnakeLength = 6;
         int snakeHunger = 3;
         public List<Enemy> enemies;
         public List<Snake> fullSnake;
@@ -127,7 +127,7 @@ namespace AC22005Assignment1
                     {
                         fullSnake.RemoveRange(i, fullSnake.Count() - i);
                         fullSnake.TrimExcess();
-                        currentSnakeLength = fullSnake.Count();
+                        currentSnakeLength = Math.Max(fullSnake.Count(), 4);
                         survivingEnemies.Remove(ghost);
                         break;
                     }
@@ -135,9 +135,6 @@ namespace AC22005Assignment1
             }
             enemies = survivingEnemies;
         }
-
-
-
 
         private void eatGhosts()
         {
@@ -159,6 +156,18 @@ namespace AC22005Assignment1
             foreach (Enemy ghost in ghostsToRemove)
             {
                 enemies.Remove(ghost);
+            }
+
+            // aside from checking if the snake is biting the ghosts, we must also check it is not biting itself
+            for (int i = 1; i < fullSnake.Count(); i++)
+            {
+                if (fullSnake[0].posX == fullSnake[i].posX && fullSnake[0].posY == fullSnake[i].posY)
+                {
+                    fullSnake.RemoveRange(i, fullSnake.Count() - i);
+                    fullSnake.TrimExcess();
+                    currentSnakeLength = Math.Max(fullSnake.Count(), 4);
+                    break;
+                }
             }
         }
 
