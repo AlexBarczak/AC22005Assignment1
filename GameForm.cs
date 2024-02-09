@@ -16,11 +16,11 @@ namespace AC22005Assignment1
     public partial class GameForm : Form
     {
         public bool isGameStart;
-        private readonly Game g;
+        private Game g;
         private readonly Label timerLabel;
         private readonly System.Windows.Forms.Timer timer;
         private int timeInSeconds;
-        private readonly Thread gameThread;
+        private Thread gameThread;
 
         // bitmap data is currently set to 1 bit per pixel meaning the color values will either be 0 or 255, we'll expand the color values as we add more stuff
         public const int EMPTY_TILE = 255;
@@ -110,13 +110,20 @@ namespace AC22005Assignment1
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000; //Milliseconds
             timer.Tick += TimerTick;
-            timer.Start();
 
-            //Create Exit and Help buttons
+            //Create Exit, Help and New Game buttons
+            Button NewGame = new();
+            NewGame.Text = "New Game";
+            NewGame.Size = new Size(80, 30);
+            NewGame.Location = new Point(10, ((this.ClientSize.Height - NewGame.Height) / 2));
+            NewGame.Click += new EventHandler(this.NewGameClicked);
+            NewGame.Anchor = AnchorStyles.None;
+            Controls.Add(NewGame);
+
             Button exitButton = new();
             exitButton.Text = "Exit";
             exitButton.Size = new Size(80, 30);
-            exitButton.Location = new Point(10, (this.ClientSize.Height - exitButton.Height) / 2);
+            exitButton.Location = new Point(10, (this.ClientSize.Height - exitButton.Height) / 2 - 40);
             exitButton.Click += new EventHandler(this.ExitButtonClicked);
             exitButton.Anchor = AnchorStyles.None;
             Controls.Add(exitButton);
@@ -124,7 +131,7 @@ namespace AC22005Assignment1
             Button helpButton = new();
             helpButton.Text = "How to play";
             helpButton.Size = new Size(80, 30);
-            helpButton.Location = new Point(10, ((this.ClientSize.Height - helpButton.Height) / 2) - 40);
+            helpButton.Location = new Point(10, ((this.ClientSize.Height - helpButton.Height) / 2) - 80);
             helpButton.Click += new EventHandler(this.HelpButtonClicked);
             helpButton.Anchor = AnchorStyles.None;
             Controls.Add(helpButton);
@@ -132,6 +139,18 @@ namespace AC22005Assignment1
             g = new Game(this);
             isGameStart = false;
             gameThread = new Thread(this.GameLoop);
+        }
+
+        private void NewGameClicked(object? sender, EventArgs e)
+        {
+            
+            g = new Game(this);
+            isGameStart = false;
+            DrawBackground();
+            DrawForeground();
+            gameThread = new Thread(this.GameLoop);
+            timeInSeconds = 0;
+            timer.Stop();
         }
 
         internal void UpdateScoreLbl()
@@ -166,9 +185,6 @@ namespace AC22005Assignment1
                 int diffX = centerX - ((Button)sender).Location.X - cellSize / 2;
                 int diffY = centerY - ((Button)sender).Location.Y - cellSize / 2;
 
-                //Debug.WriteLine("x: " + diffX.ToString() + " y: " + diffY.ToString());
-                //Debug.WriteLine(((Button)sender).Name);
-
                 // right, left or up, down
                 if (Math.Abs(diffX) > Math.Abs(diffY))
                 {
@@ -199,8 +215,8 @@ namespace AC22005Assignment1
                 isGameStart = true;
                 Debug.WriteLine("begin the balling");
                 gameThread.Start();
+                timer.Start();
             }
-            
         }
 
         private void GoUp()
@@ -246,7 +262,11 @@ namespace AC22005Assignment1
                 if(g.health <= 0)
                 {
                     g.health = 3;
-                    
+                    timer.Stop();
+                    MessageBox.Show(
+                        "Game Over\n" +
+                        "You lasted " + timeInSeconds.ToString() + " seconds\n" +
+                        "And Ate " + g.score.ToString() + " enemies");
                     break;
                 }
                 Thread.Sleep(100);
@@ -273,7 +293,7 @@ namespace AC22005Assignment1
             if (g.health == 3) snakeColor = Color.Red;
             else if (g.health == 2) snakeColor = Color.DarkRed;
             else if (g.health == 1) snakeColor = Color.Purple;
-            else snakeColor = Color.DarkMagenta;
+            else snakeColor = Color.Blue;
             foreach (Game.Snake snakePart in g.fullSnake)
             {
                 grid[snakePart.posX, snakePart.posY].BackColor = snakeColor;
@@ -317,8 +337,7 @@ namespace AC22005Assignment1
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult aboutResult;
-            aboutResult = MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void HowToPlayToolStripMenuItem_Click(object sender, EventArgs e)
