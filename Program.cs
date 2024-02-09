@@ -7,7 +7,7 @@ namespace AC22005Assignment1
         //Player name
         public static string name = "";
         //Music player
-        public static System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"../../../LikeADream.wav");
+        public static System.Media.SoundPlayer player = new(@"../../../LikeADream.wav");
         public static bool musicPlaying = true;
 
 

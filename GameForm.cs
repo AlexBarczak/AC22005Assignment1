@@ -317,8 +317,7 @@ namespace AC22005Assignment1
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult aboutResult;
-            aboutResult = MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void HowToPlayToolStripMenuItem_Click(object sender, EventArgs e)
