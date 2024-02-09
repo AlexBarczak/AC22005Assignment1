@@ -226,7 +226,7 @@ namespace AC22005Assignment1
                 dirToSnakeX = 0;
             }
 
-            if (form.getLevelMapData()[(ghost.posX + dirToSnakeX + form.levelBitmap.Width) % form.levelBitmap.Width,
+            if (form.GetLevelMapData()[(ghost.posX + dirToSnakeX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                        (ghost.posY + dirToSnakeY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0
                                        && !(ghost.currentDirX + dirToSnakeX == 0 && ghost.currentDirY + dirToSnakeY == 0))
             {
@@ -235,7 +235,7 @@ namespace AC22005Assignment1
                 ghost.currentDirX = dirToSnakeX;
                 ghost.currentDirY = dirToSnakeY;
             }
-            else if (form.getLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+            else if (form.GetLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                             (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
             {
                 ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
@@ -252,7 +252,7 @@ namespace AC22005Assignment1
                     ghost.currentDirY = -ghost.currentDirY;
                 }
 
-                if (form.getLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                if (form.GetLevelMapData()[(ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                            (ghost.posY + ghost.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
                 {
                     ghost.posX = (ghost.posX + ghost.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
@@ -278,7 +278,7 @@ namespace AC22005Assignment1
 
             // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
             // If it did, we would have a outOfRange Exception as soon as the snake travels into the left or top sides of the map
-            if (form.getLevelMapData()[(snakeHead.posX + form.directionX + form.levelBitmap.Width) % form.levelBitmap.Width,
+            if (form.GetLevelMapData()[(snakeHead.posX + form.directionX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                        (snakeHead.posY + form.directionY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0
 
                                        // check that if the direction the snake is headed is opposite to the direction the player wants to go are opposite,
@@ -294,7 +294,7 @@ namespace AC22005Assignment1
             }
 
             // if the snake cannot move the direction player wants to go, check if the snake can move in it's current direction
-            else if (form.getLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+            else if (form.GetLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                             (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
             {
                 newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;
@@ -328,7 +328,7 @@ namespace AC22005Assignment1
                     snakeHead.currentDirY = -snakeHead.currentDirY;
                 }
 
-                if (form.getLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
+                if (form.GetLevelMapData()[(snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width,
                                            (snakeHead.posY + snakeHead.currentDirY + form.levelBitmap.Height) % form.levelBitmap.Height] != 0)
                 {
                     newHead.posX = (snakeHead.posX + snakeHead.currentDirX + form.levelBitmap.Width) % form.levelBitmap.Width;

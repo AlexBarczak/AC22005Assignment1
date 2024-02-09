@@ -84,9 +84,7 @@ namespace AC22005Assignment1
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
                     else if (levelMapData[x, y] == SPAWN_TILE)
                     {
-                        Vector2 position = new Vector2();
-                        position.x = x;
-                        position.y = y;
+                        Vector2 position = new() { x = x, y = y };
                         enemySpawns.Add(position);
                         grid[x, y].BackColor = Color.White;
                     }
@@ -115,7 +113,7 @@ namespace AC22005Assignment1
             timer.Start();
 
             //Create Exit and Help buttons
-            Button exitButton = new Button();
+            Button exitButton = new();
             exitButton.Text = "Exit";
             exitButton.Size = new Size(80, 30);
             exitButton.Location = new Point(10, (this.ClientSize.Height - exitButton.Height) / 2);
@@ -123,7 +121,7 @@ namespace AC22005Assignment1
             exitButton.Anchor = AnchorStyles.None;
             Controls.Add(exitButton);
 
-            Button helpButton = new Button();
+            Button helpButton = new();
             helpButton.Text = "How to play";
             helpButton.Size = new Size(80, 30);
             helpButton.Location = new Point(10, ((this.ClientSize.Height - helpButton.Height) / 2) - 40);
@@ -133,7 +131,7 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
-            gameThread = new Thread(this.gameLoop);
+            gameThread = new Thread(this.GameLoop);
         }
 
         internal void UpdateScoreLbl()
@@ -150,7 +148,7 @@ namespace AC22005Assignment1
             });
         }
 
-        public int[,] getLevelMapData()
+        public int[,] GetLevelMapData()
         {
             return levelMapData;
         }
@@ -176,22 +174,22 @@ namespace AC22005Assignment1
                 {
                     if (diffX > 0)
                     {
-                        goLeft();
+                        GoLeft();
                     }
                     else
                     {
-                        goRight();
+                        GoRight();
                     }
                 }
                 else
                 {
                     if (diffY > 0)
                     {
-                        goUp();
+                        GoUp();
                     }
                     else
                     {
-                        goDown();
+                        GoDown();
                     }
                 }
             }
@@ -205,45 +203,45 @@ namespace AC22005Assignment1
             
         }
 
-        private void goUp()
+        private void GoUp()
         {
             lblDirectionIndicator.Text = "Direction: Up";
             directionX = 0;
             directionY = -1;
         }
 
-        private void goDown()
+        private void GoDown()
         {
             lblDirectionIndicator.Text = "Direction: Down";
             directionX = 0;
             directionY = 1;
         }
 
-        private void goLeft()
+        private void GoLeft()
         {
             lblDirectionIndicator.Text = "Direction: left";
             directionX = -1;
             directionY = 0;
         }
 
-        private void goRight()
+        private void GoRight()
         {
             lblDirectionIndicator.Text = "Direction: Right";
             directionX = 1;
             directionY = 0;
         }
 
-        private void gameLoop()
+        private void GameLoop()
         {
             while (isGameStart)
             {
 
                 // draw background
-                drawBackground();
+                DrawBackground();
                 // run tick of game logic
                 g.MainGameLoop();
                 // draw foreground
-                drawForeground();
+                DrawForeground();
 
                 if(g.health <= 0)
                 {
@@ -255,7 +253,7 @@ namespace AC22005Assignment1
             }
         }
 
-        private void drawBackground()
+        private void DrawBackground()
         {
             for (int x = 0; x < levelBitmap.Width; x++)
             {
@@ -269,7 +267,7 @@ namespace AC22005Assignment1
             }
         }
 
-        private void drawForeground()
+        private void DrawForeground()
         {
             Color snakeColor;
             if (g.health == 3) snakeColor = Color.Red;
@@ -312,18 +310,18 @@ namespace AC22005Assignment1
 
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult aboutResult;
             aboutResult = MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void howToPlayToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HowToPlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -349,19 +347,19 @@ namespace AC22005Assignment1
 
             if (e.KeyCode == Keys.W)
             {
-                goUp();
+                GoUp();
             } 
             else if (e.KeyCode == Keys.S)
             {
-                goDown();
+                GoDown();
             }
             else if (e.KeyCode == Keys.A)
             {
-                goLeft();
+                GoLeft();
             }
             else if (e.KeyCode == Keys.D)
             {
-                goRight();
+                GoRight();
             }
         }
     }
