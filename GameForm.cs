@@ -16,7 +16,6 @@ namespace AC22005Assignment1
     public partial class GameForm : Form
     {
         public bool isGameStart;
-        bool currentDirectionValid;
         Game g;
         private Label timerLabel;
         private System.Windows.Forms.Timer timer;
@@ -25,6 +24,7 @@ namespace AC22005Assignment1
 
         // bitmap data is currently set to 1 bit per pixel meaning the color values will either be 0 or 255, we'll expand the color values as we add more stuff
         public const int EMPTY_TILE = 255;
+        public const int SPAWN_TILE = 128;
         public const int WALL_TILE = 0;
         public const int cellSize = 20;
 
@@ -34,6 +34,16 @@ namespace AC22005Assignment1
 
         public int directionX = 0;
         public int directionY = 0;
+
+        // slightly annoying way of doing this but it's easily enforced in keeping each map
+        // having 12 enemy spawns
+        public List<vector2> enemySpawns = new List<vector2>();
+
+        public struct vector2
+        {
+            public int x;
+            public int y;
+        }
 
         public GameForm()
         {
@@ -72,6 +82,14 @@ namespace AC22005Assignment1
 
                     if (levelMapData[x, y] == EMPTY_TILE) grid[x, y].BackColor = Color.White;
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
+                    else if (levelMapData[x, y] == SPAWN_TILE)
+                    {
+                        vector2 position = new vector2();
+                        position.x = x;
+                        position.y = y;
+                        enemySpawns.Add(position);
+                        grid[x, y].BackColor = Color.White;
+                    }
                     else grid[x, y].BackColor = Color.Blue;
 
                     grid[x, y].Click += new EventHandler(this.GridButtonClicked);
@@ -115,12 +133,21 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
-            currentDirectionValid= false;
+            gameThread = new Thread(this.gameLoop);
         }
 
-        public static void updateGraphics()
+        internal void UpdateScoreLbl()
         {
+            // threading problems resolved using method invoking 
+            // details: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.methodinvoker?view=windowsdesktop-8.0
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (!lbl_score.IsHandleCreated || lbl_score.IsDisposed) return;
+            
 
+            this.lbl_score.Invoke((MethodInvoker) delegate
+            {
+                this.lbl_score.Text = "Score: " + g.score.ToString();
+            });
         }
 
         public int[,] getLevelMapData()
@@ -131,12 +158,6 @@ namespace AC22005Assignment1
 
     private void GridButtonClicked(object sender, EventArgs e)
         {
-            int oldDirectionX = directionX;
-            int oldDirectionY = directionY;
-
-            Game.snake currentSnakeHead = g.fullSnake[0];
-            Game.snake newSnakeHead = new Game.snake();
-
             // figure out center of grid
             int centerX = this.ClientSize.Width / 2;
             int centerY = this.ClientSize.Height / 2;
@@ -173,21 +194,12 @@ namespace AC22005Assignment1
                         goDown();
                     }
                 }
-                newSnakeHead.posX = (currentSnakeHead.posX + directionX + levelBitmap.Width) % levelBitmap.Width;
-                newSnakeHead.posY = (currentSnakeHead.posY + directionY + levelBitmap.Height) % levelBitmap.Height;
-
-                if (getLevelMapData()[newSnakeHead.posX, newSnakeHead.posY] == 0)
-                {
-                    directionX=oldDirectionX; 
-                    directionY=oldDirectionY;
-                }
             }
 
             if (!isGameStart)
             {
                 isGameStart = true;
                 Debug.WriteLine("begin the balling");
-                gameThread = new Thread(this.gameLoop);
                 gameThread.Start();
             }
             
@@ -244,6 +256,7 @@ namespace AC22005Assignment1
                 {
                     if (levelMapData[x, y] == EMPTY_TILE) grid[x, y].BackColor = Color.White;
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
+                    else if (levelMapData[x, y] == SPAWN_TILE) grid[x, y].BackColor = Color.White;
                     else grid[x, y].BackColor = Color.Blue;
                 }
             }
@@ -251,9 +264,14 @@ namespace AC22005Assignment1
 
         private void drawForeground()
         {
-            foreach(Game.snake snakePart in g.fullSnake)
+            foreach(Game.Snake snakePart in g.fullSnake)
             {
                 grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
+            }
+
+            foreach(Game.Enemy enemy in g.enemies)
+            {
+                grid[enemy.posX, enemy.posY].BackColor = Color.MediumPurple;
             }
         }
 

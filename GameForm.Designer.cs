@@ -36,6 +36,7 @@
             this.howToPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnMute = new System.Windows.Forms.Button();
+            this.lbl_score = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,12 +102,24 @@
             this.BtnMute.UseVisualStyleBackColor = false;
             this.BtnMute.Click += new System.EventHandler(this.BtnMute_Click);
             // 
+            // lbl_score
+            // 
+            this.lbl_score.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_score.AutoSize = true;
+            this.lbl_score.Font = new System.Drawing.Font("Papyrus", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_score.Location = new System.Drawing.Point(270, 800);
+            this.lbl_score.Name = "lbl_score";
+            this.lbl_score.Size = new System.Drawing.Size(140, 46);
+            this.lbl_score.TabIndex = 5;
+            this.lbl_score.Text = "Score: 0";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.YellowGreen;
             this.ClientSize = new System.Drawing.Size(893, 848);
+            this.Controls.Add(this.lbl_score);
             this.Controls.Add(this.BtnMute);
             this.Controls.Add(this.lblDirectionIndicator);
             this.Controls.Add(this.menuStrip1);
@@ -132,5 +145,6 @@
         private ToolStripMenuItem howToPlayToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private Button BtnMute;
+        private Label lbl_score;
     }
 }
