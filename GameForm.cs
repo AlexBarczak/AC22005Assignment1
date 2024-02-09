@@ -423,6 +423,7 @@ namespace AC22005Assignment1
         //Event Handler for Tool Strip Exit button
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            isGameStart = false;
             this.Close();
         }
         
