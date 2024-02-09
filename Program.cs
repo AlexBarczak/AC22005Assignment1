@@ -1,3 +1,11 @@
+/**
+ * Snake-man Grid Game C# Assignment
+ * Team 3 members:
+ * - Alex Barczak
+ * - Flynn Henderson
+ * - Ben Houghton
+ */
+
 using System.Net.NetworkInformation;
 
 namespace AC22005Assignment1

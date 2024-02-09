@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * Snake-man Grid Game C# Assignment
+ * Team 3 members:
+ * - Alex Barczak
+ * - Flynn Henderson
+ * - Ben Houghton
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
