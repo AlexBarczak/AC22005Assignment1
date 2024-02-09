@@ -287,7 +287,7 @@ namespace AC22005Assignment1
                         "And Ate " + g.score.ToString() + " enemies");
                     break;
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
             timer.Stop();
             
