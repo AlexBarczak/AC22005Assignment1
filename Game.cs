@@ -77,8 +77,16 @@ namespace AC22005Assignment1
                     newEnemy.posY = form.enemySpawns[spawnNum].y;
                     newEnemy.movingThisTurn = false;
 
-                    // provide it a starting direction at random
+                    // prevent the ghost from spawning in the snake if it gets that long
+                    foreach(Snake bodypart in fullSnake)
+                    {
+                        if(bodypart.posY == newEnemy.posY && bodypart.posX == newEnemy.posX)
+                        {
+                            return;
+                        }
+                    }
 
+                    // provide it a starting direction at random
                     int startDir = rand.Next(4);
                     switch (startDir)
                     {
@@ -124,10 +132,11 @@ namespace AC22005Assignment1
                         break;
                     }
                 }
-                
             }
             enemies = survivingEnemies;
         }
+
+
 
 
         private void eatGhosts()
