@@ -160,11 +160,13 @@ namespace AC22005Assignment1
         {
             
             g = new Game(this);
+            gameThread = new Thread(this.GameLoop);
             isGameStart = false;
             DrawBackground();
             DrawForeground();
-            gameThread = new Thread(this.GameLoop);
+            this.lbl_score.Text = "Score: " + g.score.ToString();
             timeInSeconds = 0;
+            timerLabel.Text = "Time: " + timeInSeconds + " seconds";
             timer.Stop();
         }
 
@@ -279,8 +281,6 @@ namespace AC22005Assignment1
                 //Statement to check for game over
                 if(g.health <= 0)
                 {
-                    g.health = 3;
-                    timer.Stop();
                     MessageBox.Show(
                         "Game Over\n" +
                         "You lasted " + timeInSeconds.ToString() + " seconds\n" +
@@ -289,6 +289,8 @@ namespace AC22005Assignment1
                 }
                 Thread.Sleep(100);
             }
+            timer.Stop();
+            
         }
 
         //Draw bitmap
@@ -404,6 +406,7 @@ namespace AC22005Assignment1
 
         private void ExitButtonClicked(object? sender, EventArgs e)
         {
+            isGameStart = false;
             this.Close(); // Close the current form
         }
         //Eventhandler for Help button
