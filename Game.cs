@@ -310,7 +310,7 @@ namespace AC22005Assignment1
                 // if the snake has hit a wall then the current direction is not viable, we do not want the snake to turn around either
                 // we will swap the value of the snakes current x direction and current y direction D it finds a suitable path
 
-                if (snakeHead.timeAtWall < 2)
+                if (snakeHead.timeAtWall < 3)
                 {
 
                     // must do this due to c# being a prick about using references
