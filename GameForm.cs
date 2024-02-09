@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * Snake-man Grid Game C# Assignment
+ * Team members:
+ * - Alex Barczak
+ * - Flynn Henderson
+ * - Ben Houghton
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +18,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Windows.Input;
+using static System.Windows.Forms.AxHost;
 
 namespace AC22005Assignment1
 {
     public partial class GameForm : Form
     {
+        // necessary game variables
         public bool isGameStart;
         private Game g;
         private readonly Label timerLabel;
@@ -28,10 +38,12 @@ namespace AC22005Assignment1
         public const int WALL_TILE = 0;
         public const int cellSize = 20;
 
+        // grid level data
         private readonly Button[,] grid;
         public Bitmap levelBitmap;
         private readonly int[,] levelMapData;
 
+        // direction variables
         public int directionX = 0;
         public int directionY = 0;
 
@@ -39,6 +51,8 @@ namespace AC22005Assignment1
         // having 12 enemy spawns
         public List<Vector2> enemySpawns = new();
 
+        Form HelpForm = new Form(); // help form
+        // Dummy Vector for Enemy spawns
         public struct Vector2
         {
             public int x;
@@ -49,11 +63,11 @@ namespace AC22005Assignment1
         {
 
             InitializeComponent();
-            this.Icon = new Icon(@"../../../Snake.ico");
+            HelpSetup(); // help form function
             // Size Form, load Bitmap
             this.AutoSize = true;
             // initialise level data variable
-            levelBitmap = new Bitmap(@"../../../level.bmp");
+            levelBitmap = new Bitmap(@"../../../level.bmp"); //Grid Bitmap
             levelMapData = new int[levelBitmap.Width, levelBitmap.Height];
             grid = new Button[levelBitmap.Width, levelBitmap.Height];
 
@@ -98,9 +112,9 @@ namespace AC22005Assignment1
 
             //Create timer
             timerLabel = new Label();
-            timerLabel.Text = "Time: -2 seconds";
+            timerLabel.Text = "Time: 0 seconds";
             timerLabel.AutoSize = true;
-            timerLabel.Location = new Point((xOffset) * 2, 40);
+            timerLabel.Location = new Point((xOffset), 40);
             timerLabel.TextAlign = ContentAlignment.MiddleCenter;
             timerLabel.Size = new Size(120, 80);
             timerLabel.Font = new Font("Stencil", 36);
@@ -119,7 +133,6 @@ namespace AC22005Assignment1
             NewGame.Click += new EventHandler(this.NewGameClicked);
             NewGame.Anchor = AnchorStyles.None;
             Controls.Add(NewGame);
-
             Button exitButton = new();
             exitButton.Text = "Exit";
             exitButton.Size = new Size(80, 30);
@@ -136,11 +149,13 @@ namespace AC22005Assignment1
             helpButton.Anchor = AnchorStyles.None;
             Controls.Add(helpButton);
 
+            //Start Game Loop
             g = new Game(this);
             isGameStart = false;
             gameThread = new Thread(this.GameLoop);
         }
 
+        //Event handler for New Game Button
         private void NewGameClicked(object? sender, EventArgs e)
         {
             
@@ -153,6 +168,7 @@ namespace AC22005Assignment1
             timer.Stop();
         }
 
+        //Function to Update Score
         internal void UpdateScoreLbl()
         {
             // threading problems resolved using method invoking 
@@ -166,13 +182,13 @@ namespace AC22005Assignment1
                 this.lbl_score.Text = "Score: " + g.score.ToString();
             });
         }
-
+        //Getter for LevelMapData
         public int[,] GetLevelMapData()
         {
             return levelMapData;
         }
 
-
+    //Event Handler to handle directional inputs via grid clicking
     private void GridButtonClicked(object sender, EventArgs e)
         {
             // figure out center of grid
@@ -209,16 +225,16 @@ namespace AC22005Assignment1
                     }
                 }
             }
-
+            //Start Game
             if (!isGameStart)
             {
                 isGameStart = true;
-                Debug.WriteLine("begin the balling");
                 gameThread.Start();
                 timer.Start();
             }
         }
 
+        //Various functions to handle Directional Indicator + Snake Movement
         private void GoUp()
         {
             lblDirectionIndicator.Text = "Direction: Up";
@@ -247,6 +263,7 @@ namespace AC22005Assignment1
             directionY = 0;
         }
 
+        //Main game loop
         private void GameLoop()
         {
             while (isGameStart)
@@ -259,6 +276,7 @@ namespace AC22005Assignment1
                 // draw foreground
                 DrawForeground();
 
+                //Statement to check for game over
                 if(g.health <= 0)
                 {
                     g.health = 3;
@@ -273,6 +291,7 @@ namespace AC22005Assignment1
             }
         }
 
+        //Draw bitmap
         private void DrawBackground()
         {
             for (int x = 0; x < levelBitmap.Width; x++)
@@ -286,7 +305,7 @@ namespace AC22005Assignment1
                 }
             }
         }
-
+        //Draw Snake and Enemies
         private void DrawForeground()
         {
             Color snakeColor;
@@ -304,7 +323,7 @@ namespace AC22005Assignment1
                 grid[enemy.posX, enemy.posY].BackColor = Color.MediumPurple;
             }
         }
-
+        //Function to increment timer
         private void TimerTick(object sender, EventArgs e)
         {
             timeInSeconds++;
@@ -314,53 +333,124 @@ namespace AC22005Assignment1
                 timer.Stop();
             }
         }
+        //Function to setup help form 
+        void HelpSetup()
+        {
+            HelpForm.AutoScroll = true;
+
+            HelpForm.Icon = Properties.Resources.Snake;
+            HelpForm.Text = "Help";
+            HelpForm.BackColor = Color.YellowGreen;
+            HelpForm.Anchor = AnchorStyles.None;
+            HelpForm.MaximumSize = new System.Drawing.Size(1000, 500);
+            HelpForm.MinimumSize = new System.Drawing.Size(1000, 500);
+            HelpForm.StartPosition = FormStartPosition.CenterParent;
+
+            Label LblHelpTitle = new Label();
+            LblHelpTitle.Font = new System.Drawing.Font("Stencil", 36F, FontStyle.Bold);
+            LblHelpTitle.Text = "Snake-man shall aid you!";
+            LblHelpTitle.ForeColor = Color.DarkGreen;
+            LblHelpTitle.SetBounds(50, 20, 400, 50);
+            HelpForm.Controls.Add(LblHelpTitle);
+
+            Label LblGameplay = new Label();
+            LblGameplay.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
+            LblGameplay.ForeColor = Color.Black;
+            LblGameplay.SetBounds(50, 100, 600,100);
+            LblGameplay.Text = "Upon initialising Snake-man, you will be met by the maze grid upon which Snake-man must traverse. In order to start the game, one must click on the grid in any part of it to spawn our glorious Snake. He will proceed to move around the maze, directed by clicking on the various sides of the grid that correspond to the desired direction: left, right, up and down. If preferred, one can also use WASD keyboard inputs, however you cannot start the game that way.";
+            HelpForm.Controls.Add(LblGameplay);
+
+            Label LblGameplay2 = new Label();
+            LblGameplay2.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
+            LblGameplay2.ForeColor = Color.Black;
+            LblGameplay2.SetBounds(50, 275, 600, 100);
+            LblGameplay2.Text = "Be warned, however, as upon the spawning of our beloved snake into the maze, the Snake's blasted enemies shall also begin to spawn randomly around the grid space, intent on squashing the beautiful life of our beloved slithering friend. In order to counteract this, Snake-man must fight back by consuming each enemy with his head, however if Snake-man encounters an enemy on his body, he will lose a life point - out of his total of 3 - and decay in colour!";
+            HelpForm.Controls.Add(LblGameplay2);
+
+            Label LblGameplay3 = new Label();
+            LblGameplay3.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
+            LblGameplay3.ForeColor = Color.Black;
+            LblGameplay3.SetBounds(50, 450, 600, 100);
+            LblGameplay3.Text = "However, most fortuitously, Snake-man grows stronger through the blood of his enemies, and will receive additional snake segments for every 2 enemies consumed, branching from his minimum of 4 segments to truly infinite possibilities. Alongside bodily growth, the score counter will increase likewise, for every enemy consumed.";
+            HelpForm.Controls.Add(LblGameplay3);
+
+            Label LblGameplay4 = new Label();
+            LblGameplay4.Font = new System.Drawing.Font("Papyrus", 12F, FontStyle.Bold);
+            LblGameplay4.ForeColor = Color.Black;
+            LblGameplay4.SetBounds(50, 625, 600, 100);
+            LblGameplay4.Text = "Finally, the grid space of Snake-man's domain allows for him to travel across the edges of the grid to the other side, truly groundbreaking. Alongside this, Snake-man should be noted of his tendency to act irrationally and independently of his ever loving protector if left idle for too long.";
+            HelpForm.Controls.Add(LblGameplay4);
+
+            Label LblEndHelpTitle = new Label();
+            LblEndHelpTitle.Font = new System.Drawing.Font("Stencil", 20F);
+            LblEndHelpTitle.Text = "Fortune favours the Snake!";
+            LblEndHelpTitle.ForeColor = Color.DarkGreen;
+            LblEndHelpTitle.SetBounds(50, 800, 400, 100);
+            HelpForm.Controls.Add(LblEndHelpTitle);
+
+            Button BtnHelpClose = new Button();
+            BtnHelpClose.Text = "Close";
+            BtnHelpClose.SetBounds(100, 900, 130, 50);
+            BtnHelpClose.Font = new System.Drawing.Font("Stencil", 20F, FontStyle.Bold);
+            BtnHelpClose.BackColor = Color.DarkGreen;
+            BtnHelpClose.Click += new EventHandler(this.BtnHelpClose_Click);
+            HelpForm.Controls.Add(BtnHelpClose);
+        }
+        //Button to close help form
+        private void BtnHelpClose_Click(object sender, EventArgs e)
+        {
+            HelpForm.Close();
+        }
 
         private void ExitButtonClicked(object? sender, EventArgs e)
         {
             this.Close(); // Close the current form
         }
-
+        //Eventhandler for Help button
         private new void HelpButtonClicked(object? sender, EventArgs e)
         {
-            MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            HelpForm.ShowDialog();
         }
 
         private void GameForm_Load(object sender, EventArgs e)
         {
-
+            //Necessary
         }
 
+        //Event Handler for Tool Strip Exit button
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        
+        //Event Handler for Tool Strip "About" button
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Snake-Man developed in C# by Alex Barczak (2497555), Flynn Henderson (2502464) and Ben Houghton (2498662)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        //Event Handler for Tool Strip Help button
         private void HowToPlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("I'VE GOT NO CLUE LMAOOOOO", "How to Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            HelpForm.ShowDialog();
         }
+
         //Mute Button
         private void BtnMute_Click(object sender, EventArgs e)
         {
             if (Program.musicPlaying)
             {
                 Program.player.Stop();
-                BtnMute.BackgroundImage = Image.FromFile(@"../../../unmute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
                 Program.musicPlaying = false;
             }
             else
             {
                 Program.musicPlaying = true;
                 Program.player.PlayLooping();
-                BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../unmute.bmp");
             }
         }
-
+        //Event handler for keyboard inputs
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
         {
 

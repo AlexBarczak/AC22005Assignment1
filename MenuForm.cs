@@ -1,3 +1,12 @@
+/**
+ * Snake-man Grid Game C# Assignment
+ * Team members:
+ * - Alex Barczak
+ * - Flynn Henderson
+ * - Ben Houghton
+ */
+
+
 using System.Media;
 
 
@@ -6,17 +15,18 @@ namespace AC22005Assignment1
 {
     public partial class MenuForm : Form
     {
-        public static System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"../../../LikeADream.wav");
+        public static System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"../../../LikeADream.wav"); //Soundtrack!
         public MenuForm()
         {
             InitializeComponent();
-            this.Icon = new Icon(@"../../../Snake.ico");
             Program.player.PlayLooping();
         }
+        //Getter for music
         public static System.Media.SoundPlayer getSoundPlayer()
         {
             return player;
         }
+        //Event handler for start button
         private void btnStart_Click(object sender, EventArgs e)
         {
             GameForm gameForm = new GameForm();
@@ -28,7 +38,7 @@ namespace AC22005Assignment1
         private void btnExit_Click(object sender, EventArgs e)
         {
             Program.player.Stop();
-            Application.Exit();
+            Close();
         }
 
         //Mute Button
@@ -37,14 +47,14 @@ namespace AC22005Assignment1
             if (Program.musicPlaying)
             {
                 Program.player.Stop();
-                BtnMute.BackgroundImage = Image.FromFile(@"../../../unmute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
                 Program.musicPlaying = false;
             }
             else
             {
                 Program.musicPlaying = true;
                 Program.player.PlayLooping();
-                BtnMute.BackgroundImage = Image.FromFile(@"../../../mute.bmp");
+                BtnMute.BackgroundImage = Image.FromFile(@"../../../unmute.bmp");
             }
         }
     }
