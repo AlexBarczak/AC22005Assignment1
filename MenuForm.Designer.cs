@@ -76,7 +76,7 @@
             // 
             BtnMute.Anchor = AnchorStyles.None;
             BtnMute.BackColor = Color.Linen;
-            BtnMute.BackgroundImage = (Image)resources.GetObject("BtnMute.BackgroundImage");
+            BtnMute.BackgroundImage = Properties.Resources.unmute;
             BtnMute.BackgroundImageLayout = ImageLayout.Zoom;
             BtnMute.Location = new Point(1057, 28);
             BtnMute.Name = "BtnMute";
@@ -97,6 +97,7 @@
             Controls.Add(lblTitle);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             Name = "MenuForm";
             Text = "Menu";
