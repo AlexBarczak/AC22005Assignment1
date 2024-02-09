@@ -16,11 +16,11 @@ namespace AC22005Assignment1
     public partial class GameForm : Form
     {
         public bool isGameStart;
-        Game g;
-        private Label timerLabel;
-        private System.Windows.Forms.Timer timer;
+        private readonly Game g;
+        private readonly Label timerLabel;
+        private readonly System.Windows.Forms.Timer timer;
         private int timeInSeconds;
-        Thread gameThread;
+        private readonly Thread gameThread;
 
         // bitmap data is currently set to 1 bit per pixel meaning the color values will either be 0 or 255, we'll expand the color values as we add more stuff
         public const int EMPTY_TILE = 255;
@@ -28,18 +28,18 @@ namespace AC22005Assignment1
         public const int WALL_TILE = 0;
         public const int cellSize = 20;
 
-        Button[,] grid;
+        private readonly Button[,] grid;
         public Bitmap levelBitmap;
-        int[,] levelMapData;
+        private readonly int[,] levelMapData;
 
         public int directionX = 0;
         public int directionY = 0;
 
         // slightly annoying way of doing this but it's easily enforced in keeping each map
         // having 12 enemy spawns
-        public List<vector2> enemySpawns = new List<vector2>();
+        public List<Vector2> enemySpawns = new();
 
-        public struct vector2
+        public struct Vector2
         {
             public int x;
             public int y;
@@ -74,9 +74,9 @@ namespace AC22005Assignment1
             {
                 for (int y = 0; y < levelBitmap.Height; y++)
                 {
-                    grid[x, y] = new Button();
-                    grid[x, y].Name = x + "," + y;
-                    grid[x, y].FlatStyle = FlatStyle.Flat;
+                    grid[x, y] = new Button() { Name = x + "," + y,
+                                                FlatStyle = FlatStyle.Flat
+                    };
                     grid[x, y].FlatAppearance.BorderSize = 0;
                     grid[x, y].SetBounds(xOffset + cellSize * x, yOffset + cellSize * y, cellSize, cellSize);
 
@@ -84,7 +84,7 @@ namespace AC22005Assignment1
                     else if (levelMapData[x, y] == WALL_TILE) grid[x, y].BackColor = Color.Black;
                     else if (levelMapData[x, y] == SPAWN_TILE)
                     {
-                        vector2 position = new vector2();
+                        Vector2 position = new Vector2();
                         position.x = x;
                         position.y = y;
                         enemySpawns.Add(position);
@@ -241,9 +241,16 @@ namespace AC22005Assignment1
                 // draw background
                 drawBackground();
                 // run tick of game logic
-                g.mainGameLoop();
+                g.MainGameLoop();
                 // draw foreground
                 drawForeground();
+
+                if(g.health <= 0)
+                {
+                    g.health = 3;
+                    
+                    break;
+                }
                 Thread.Sleep(100);
             }
         }
@@ -264,9 +271,14 @@ namespace AC22005Assignment1
 
         private void drawForeground()
         {
-            foreach(Game.Snake snakePart in g.fullSnake)
+            Color snakeColor;
+            if (g.health == 3) snakeColor = Color.Red;
+            else if (g.health == 2) snakeColor = Color.DarkRed;
+            else if (g.health == 1) snakeColor = Color.Purple;
+            else snakeColor = Color.DarkMagenta;
+            foreach (Game.Snake snakePart in g.fullSnake)
             {
-                grid[snakePart.posX, snakePart.posY].BackColor = Color.Red;
+                grid[snakePart.posX, snakePart.posY].BackColor = snakeColor;
             }
 
             foreach(Game.Enemy enemy in g.enemies)

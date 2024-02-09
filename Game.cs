@@ -9,10 +9,11 @@ namespace AC22005Assignment1
 {
     internal class Game
     {
-        GameForm form;
-        Random rand = new Random();
+        readonly GameForm form;
+        readonly Random rand = new();
 
         public int score = 0;
+        public int health = 3;
 
         public struct Snake
         {
@@ -31,9 +32,9 @@ namespace AC22005Assignment1
             public bool movingThisTurn;
         }
 
-        // the snake will grow in length by 1 for every 3 enemies it eats
-        int currentSnakeLength = 6;
-        int snakeHunger = 3;
+        // the snake will grow in length by 1 for every 2 enemies it eats
+        int currentSnakeLength = 4;
+        int snakeHunger = 2;
         public List<Enemy> enemies;
         public List<Snake> fullSnake;
 
@@ -42,28 +43,29 @@ namespace AC22005Assignment1
             fullSnake = new List<Snake>();
             enemies = new List<Enemy>();
 
-            Snake snakeHead = new Snake();
-
-            snakeHead.posX = 16;
-            snakeHead.posY = 16;
-            snakeHead.currentDirX = 0;
-            snakeHead.currentDirY = 0;
+            Snake snakeHead = new() 
+            {   
+            posX = 16,
+            posY = 16,
+            currentDirX = 0,
+            currentDirY = 0
+            };
 
             fullSnake.Add(snakeHead);
             this.form = form;
         }
 
-        public void mainGameLoop()
+        public void MainGameLoop()
         {
-            moveTheSnake();
-            eatGhosts();
-            moveEnemies();
-            eatGhosts();
-            biteSnake();
-            spawnEnemies();
+            MoveTheSnake();
+            EatGhosts();
+            MoveEnemies();
+            EatGhosts();
+            BiteSnake();
+            SpawnEnemies();
         }
 
-        private void spawnEnemies()
+        private void SpawnEnemies()
         {
             // possibly spawn in an enemy
             // ticks happen ten times per second,
@@ -71,13 +73,15 @@ namespace AC22005Assignment1
             // available positions by proximity to snake head 
             if (rand.Next(15) == 0)
             {
-                int spawnNum = rand.Next(0, form.enemySpawns.Count());
+                int spawnNum = rand.Next(0, form.enemySpawns.Count);
                 if (Math.Max(form.enemySpawns[spawnNum].x - fullSnake[0].posX, form.enemySpawns[spawnNum].y - fullSnake[0].posY) > 4)
                 {
-                    Enemy newEnemy = new Enemy();
-                    newEnemy.posX = form.enemySpawns[spawnNum].x;
-                    newEnemy.posY = form.enemySpawns[spawnNum].y;
-                    newEnemy.movingThisTurn = false;
+                    Enemy newEnemy = new()
+                    {
+                        posX = form.enemySpawns[spawnNum].x,
+                        posY = form.enemySpawns[spawnNum].y,
+                        movingThisTurn = false
+                    };
 
                     // prevent the ghost from spawning in the snake if it gets that long
                     foreach(Snake bodypart in fullSnake)
@@ -116,21 +120,22 @@ namespace AC22005Assignment1
             }
         }
 
-        private void biteSnake()
+        private void BiteSnake()
         {
             // Say the snake is poisonous to the enemies and it kill them wen they bite it
-            List<Enemy> survivingEnemies = new List<Enemy>();
+            List<Enemy> survivingEnemies = new();
             foreach(Enemy ghost in enemies)
             {
                 survivingEnemies.Add(ghost);
-                for (int i = 1; i < fullSnake.Count(); i++)
+                for (int i = 1; i < fullSnake.Count; i++)
                 {
                     if (ghost.posX == fullSnake[i].posX && ghost.posY == fullSnake[i].posY)
                     {
-                        fullSnake.RemoveRange(i, fullSnake.Count() - i);
+                        fullSnake.RemoveRange(i, fullSnake.Count - i);
                         fullSnake.TrimExcess();
-                        currentSnakeLength = Math.Max(fullSnake.Count(), 4);
+                        currentSnakeLength = Math.Max(fullSnake.Count, 4);
                         survivingEnemies.Remove(ghost);
+                        health -= 1;
                         break;
                     }
                 }
@@ -138,9 +143,9 @@ namespace AC22005Assignment1
             enemies = survivingEnemies;
         }
 
-        private void eatGhosts()
+        private void EatGhosts()
         {
-            List<Enemy> ghostsToRemove = new List<Enemy>();
+            List<Enemy> ghostsToRemove = new();
             foreach (Enemy ghost in enemies)
             {
                 if (fullSnake[0].posX == ghost.posX && fullSnake[0].posY == ghost.posY)
@@ -163,35 +168,36 @@ namespace AC22005Assignment1
             }
 
             // aside from checking if the snake is biting the ghosts, we must also check it is not biting itself
-            for (int i = 1; i < fullSnake.Count(); i++)
+            for (int i = 1; i < fullSnake.Count; i++)
             {
                 if (fullSnake[0].posX == fullSnake[i].posX && fullSnake[0].posY == fullSnake[i].posY)
                 {
-                    fullSnake.RemoveRange(i, fullSnake.Count() - i);
+                    fullSnake.RemoveRange(i, fullSnake.Count - i);
                     fullSnake.TrimExcess();
-                    currentSnakeLength = Math.Max(fullSnake.Count(), 4);
+                    currentSnakeLength = Math.Max(fullSnake.Count, 4);
+                    health -= 1;
                     break;
                 }
             }
         }
 
-        private void moveEnemies()
+        private void MoveEnemies()
         {
             // enemies will move in a near identical manner to the snake functionally speaking
             // they figure out the direction they wanna go and then they go for it whenever possible
             // one difference between the snake and enemies will be that the enemies move at half the speed
             
             // creating new list and swapping lists due to foreach breaking if you alter contents
-            List<Enemy> newEnemyPositions = new List<Enemy>(enemies.Count());
+            List<Enemy> newEnemyPositions = new(enemies.Count);
             foreach(Enemy ghost in enemies)
             {
-                newEnemyPositions.Add(moveEnemy(ghost));
+                newEnemyPositions.Add(MoveEnemy(ghost));
             }
 
             enemies = newEnemyPositions;
         }
 
-        private Enemy moveEnemy(Enemy ghost)
+        private Enemy MoveEnemy(Enemy ghost)
         {
             if (!ghost.movingThisTurn)
             {
@@ -204,7 +210,7 @@ namespace AC22005Assignment1
             // first determine the direction to reach the snake's centermost section,
             // using the center to make sure that the enemies don't just trail behind the snake's tail
 
-            int snakePiece = fullSnake.Count() / 2;
+            int snakePiece = fullSnake.Count / 2;
 
             int dirToSnakeX = fullSnake[snakePiece].posX - ghost.posX;
             int dirToSnakeY = fullSnake[snakePiece].posY - ghost.posY;
@@ -212,11 +218,11 @@ namespace AC22005Assignment1
             if (Math.Abs(dirToSnakeX) > Math.Abs(dirToSnakeY))
             {
                 dirToSnakeY = 0;
-                dirToSnakeX = dirToSnakeX / Math.Abs(dirToSnakeX);
+                dirToSnakeX /= Math.Abs(dirToSnakeX);
             }
             else
             {
-                dirToSnakeY = dirToSnakeY / Math.Abs(dirToSnakeY);
+                dirToSnakeY /= Math.Abs(dirToSnakeY);
                 dirToSnakeX = 0;
             }
 
@@ -237,9 +243,7 @@ namespace AC22005Assignment1
             }
             else
             {
-                int temp = ghost.currentDirX;
-                ghost.currentDirX = ghost.currentDirY;
-                ghost.currentDirY = temp;
+                (ghost.currentDirX, ghost.currentDirY) = (ghost.currentDirY, ghost.currentDirX);
 
                 // randomize between left and right
                 if (rand.Next(0, 2) == 1)
@@ -267,11 +271,10 @@ namespace AC22005Assignment1
             return ghost;
         }
 
-        private void moveTheSnake()
+        private void MoveTheSnake()
         {
             Snake snakeHead = fullSnake[0];
-            Snake newHead = new Snake();
-            newHead.timeAtWall = 0;
+            Snake newHead = new() { timeAtWall = 0 };
 
             // the reason we add the map width and then take it's modulo is to ensure that the modulo function never returns a negative value
             // If it did, we would have a outOfRange Exception as soon as the snake travels into the left or top sides of the map
@@ -316,9 +319,7 @@ namespace AC22005Assignment1
                     return;
                 }
 
-                int temp = snakeHead.currentDirX;
-                snakeHead.currentDirX = snakeHead.currentDirY;
-                snakeHead.currentDirY = temp;
+                (snakeHead.currentDirX, snakeHead.currentDirY) = (snakeHead.currentDirY, snakeHead.currentDirX);
 
                 // randomize between left and right
                 if (rand.Next(0, 2) == 1)
@@ -351,7 +352,7 @@ namespace AC22005Assignment1
 
 
             // If the snake has not grown, cut off the oldest tailpiece
-            if (fullSnake.Count() > currentSnakeLength)
+            if (fullSnake.Count > currentSnakeLength)
             {
                 fullSnake.RemoveAt(currentSnakeLength);
             }
