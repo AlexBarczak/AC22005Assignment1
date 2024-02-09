@@ -153,6 +153,7 @@ namespace AC22005Assignment1
                     }
                     ghostsToRemove.Add(ghost);
                     score += 1;
+                    form.UpdateScoreLbl();
                 }
             }
 

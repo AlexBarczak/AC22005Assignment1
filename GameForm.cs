@@ -138,7 +138,16 @@ namespace AC22005Assignment1
 
         internal void UpdateScoreLbl()
         {
-            lbl_score.Text = "Score: " + g.score.ToString();
+            // threading problems resolved using method invoking 
+            // details: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.methodinvoker?view=windowsdesktop-8.0
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (!lbl_score.IsHandleCreated || lbl_score.IsDisposed) return;
+            
+
+            this.lbl_score.Invoke((MethodInvoker) delegate
+            {
+                this.lbl_score.Text = "Score: " + g.score.ToString();
+            });
         }
 
         public int[,] getLevelMapData()
@@ -235,7 +244,6 @@ namespace AC22005Assignment1
                 g.mainGameLoop();
                 // draw foreground
                 drawForeground();
-                UpdateScoreLbl();
                 Thread.Sleep(100);
             }
         }
