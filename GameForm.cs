@@ -16,6 +16,7 @@ namespace AC22005Assignment1
     public partial class GameForm : Form
     {
         public bool isGameStart;
+        bool currentDirectionValid;
         Game g;
         private Label timerLabel;
         private System.Windows.Forms.Timer timer;
@@ -45,7 +46,6 @@ namespace AC22005Assignment1
             levelBitmap = new Bitmap(@"../../../level.bmp");
             levelMapData = new int[levelBitmap.Width, levelBitmap.Height];
             grid = new Button[levelBitmap.Width, levelBitmap.Height];
-            gameThread = new Thread(this.gameLoop);
 
             // translate bitmap into the 2D array for level data, though it might not even be necessary
             for (int i = 0; i < levelBitmap.Width; i++)
@@ -115,6 +115,7 @@ namespace AC22005Assignment1
 
             g = new Game(this);
             isGameStart = false;
+            currentDirectionValid= false;
         }
 
         public static void updateGraphics()
@@ -186,6 +187,7 @@ namespace AC22005Assignment1
             {
                 isGameStart = true;
                 Debug.WriteLine("begin the balling");
+                gameThread = new Thread(this.gameLoop);
                 gameThread.Start();
             }
             
